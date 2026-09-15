@@ -45,7 +45,7 @@ async function diagnosticar(erro) {
         return "este navegador/dispositivo não suporta WebGL.";
 
     try {
-        const resposta = await fetch("assets/eu.glb", { method: "HEAD", cache: "no-store" });
+        const resposta = await fetch("assets/eu_comprimido.glb", { method: "HEAD", cache: "no-store" });
         if (!resposta.ok)
             return `o arquivo assets/eu.glb respondeu ${resposta.status} (${resposta.statusText}) — verifique se ele existe nesse caminho.`;
     } catch {
