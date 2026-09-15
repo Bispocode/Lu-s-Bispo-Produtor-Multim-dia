@@ -81,12 +81,16 @@ async function iniciar() {
 
                 modelo = gltf.scene;
 
-                modelo.traverse(child => {
-                    if (child.isMesh && child.material?.name !== "Material.005") {
-                        child.material = toon;
-                    }
-                });
+               modelo.traverse(child => {
+    if (child.isMesh) {
 
+        child.geometry.computeVertexNormals();
+
+        if (child.material?.name !== "Material.005") {
+            child.material = toon;
+        }
+    }
+});
                 const box = new THREE.Box3().setFromObject(modelo);
                 const center = box.getCenter(new THREE.Vector3());
                 const size = box.getSize(new THREE.Vector3());
