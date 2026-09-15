@@ -81,7 +81,13 @@ async function iniciar() {
 
                 modelo = gltf.scene;
 
-               modelo.traverse(child => {
+               const toon = new THREE.MeshStandardMaterial({
+    color: 0xD7263D,
+    roughness: 0.3,
+    metalness: 0
+});
+
+modelo.traverse(child => {
     if (child.isMesh) {
 
         child.geometry.computeVertexNormals();
