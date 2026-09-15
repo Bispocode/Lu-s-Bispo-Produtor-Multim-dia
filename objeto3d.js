@@ -76,7 +76,7 @@ async function iniciar() {
         let modelo, targetX = 0, targetY = 0, mx = 0, my = 0;
 
         new GLTFLoader().load(
-            "assets/eu.glb",
+            "eu.glb",
             (gltf) => {
 
                 modelo = gltf.scene;
