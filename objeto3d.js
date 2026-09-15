@@ -101,7 +101,7 @@ async function iniciar() {
         // Ambiente para reflexos/realces suaves (aproxima do Solid Shading do Blender)
         const { RoomEnvironment } = await import("https://esm.sh/three@0.179/examples/jsm/environments/RoomEnvironment");
         const pmrem = new THREE.PMREMGenerator(renderer);
-        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.00).texture;
         pmrem.dispose();
 
         scene.add(new THREE.HemisphereLight(0xffe9e2, 0x5c1420, 0.7));
@@ -116,7 +116,7 @@ async function iniciar() {
         // (uma instância só = menos trocas de estado na GPU)
         const material = new THREE.MeshStandardMaterial({
             color: 0xD7263D,
-            roughness: 0.3,
+            roughness: 0.5,
             metalness: 0
         });
 
