@@ -20,13 +20,45 @@ function suportaWebGL() {
     } catch (e) { return false; }
 }
 
-function usarFallback() {
-    if (statusEl) statusEl.hidden = true;
+function usarFallback(motivo) {
+    if (statusEl) {
+        if (motivo) {
+            statusEl.hidden = false;
+            statusEl.textContent = "Modelo 3D não carregou: " + motivo;
+        } else {
+            statusEl.hidden = true;
+        }
+    }
     if (fallbackEl) fallbackEl.hidden = false;
 }
 
-if (conexaoRuim() || !suportaWebGL()) {
-    usarFallback();
+// Investiga as causas mais comuns de falha e devolve uma frase legível
+async function diagnosticar(erro) {
+
+    if (location.protocol === "file:")
+        return "a página foi aberta direto como arquivo (file://); precisa ser servida por http(s) para o navegador buscar o .glb.";
+
+    if (!navigator.onLine)
+        return "não há conexão com a internet no momento.";
+
+    if (!suportaWebGL())
+        return "este navegador/dispositivo não suporta WebGL.";
+
+    try {
+        const resposta = await fetch("assets/eu.glb", { method: "HEAD", cache: "no-store" });
+        if (!resposta.ok)
+            return `o arquivo assets/eu.glb respondeu ${resposta.status} (${resposta.statusText}) — verifique se ele existe nesse caminho.`;
+    } catch {
+        return "não foi possível alcançar assets/eu.glb (caminho errado, bloqueio de CORS ou servidor fora do ar).";
+    }
+
+    return (erro && (erro.message || String(erro))) || "motivo desconhecido — veja o console para o erro completo.";
+}
+
+if (conexaoRuim()) {
+    usarFallback("conexão lenta ou modo de economia de dados detectado.");
+} else if (!suportaWebGL()) {
+    usarFallback("este navegador/dispositivo não suporta WebGL.");
 } else {
 
     const observer = new IntersectionObserver((entradas, obs) => {
@@ -61,91 +93,20 @@ async function iniciar() {
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
         container.appendChild(renderer.domElement);
 
-        scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-        const key = new THREE.DirectionalLight(0xffffff, 2.4);
+        // Ambiente para reflexos/realces suaves (aproxima do Solid Shading do Blender)
+        const { RoomEnvironment } = await import("https://esm.sh/three@0.179/examples/jsm/environments/RoomEnvironment");
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        pmrem.dispose();
+
+        scene.add(new THREE.HemisphereLight(0xffe9e2, 0x5c1420, 0.7));
+        const key = new THREE.DirectionalLight(0xffffff, 1.8);
         key.position.set(4, 5, 6);
         scene.add(key);
-        const rim = new THREE.DirectionalLight(0xff9ab0, 1.1);
-        rim.position.set(-5, 1, -4);
-        scene.add(rim);
-
-        const toon = new THREE.MeshStandardMaterial({ color: 0xD7263D, roughness: .55, metalness: 0 });
-
-        let modelo, targetX = 0, targetY = 0, mx = 0, my = 0;
-
-        new GLTFLoader().load(
-            "eu.glb",
-            (gltf) => {
-
-                modelo = gltf.scene;
-
-               const toon = new THREE.MeshStandardMaterial({
-    color: 0xD7263D,
-    roughness: 0.3,
-    metalness: 0
-});
-
-modelo.traverse(child => {
-    if (child.isMesh) {
-
-        child.geometry.computeVertexNormals();
-
-        if (child.material?.name !== "Material.005") {
-            child.material = toon;
-        }
-    }
-});
-                const box = new THREE.Box3().setFromObject(modelo);
-                const center = box.getCenter(new THREE.Vector3());
-                const size = box.getSize(new THREE.Vector3());
-                const maxDim = Math.max(size.x, size.y, size.z);
-
-                modelo.position.sub(center);
-                const scale = 5.4 / maxDim;
-                modelo.scale.setScalar(scale);
-
-                scene.add(modelo);
-
-                if (statusEl) statusEl.hidden = true;
-
-            },
-            undefined,
-            (erro) => { console.error(erro); usarFallback(); }
-        );
-
-        window.addEventListener("mousemove", (e) => {
-            mx = e.clientX; my = e.clientY;
-        });
-
-        window.addEventListener("resize", () => {
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            if (modelo && !reduzirMovimento) {
-                const nx = ((mx / window.innerWidth) - 0.5) * 2;
-                const ny = ((my / window.innerHeight) - 0.5) * 2;
-                targetY = nx * 0.5;
-                targetX = ny * 0.25;
-                modelo.rotation.y = THREE.MathUtils.lerp(modelo.rotation.y, targetY, .06);
-                modelo.rotation.x = THREE.MathUtils.lerp(modelo.rotation.x, targetX, .06);
-            } else if (modelo) {
-                modelo.rotation.y = 0.3;
-            }
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-    } catch (erro) {
-        console.error(erro);
-        usarFallback();
-    }
-
-}
+        const rim = new THREE.DirectionalLight(0xff9ab0, 0.9);
+        rim.position.set(-5,
