@@ -104,11 +104,11 @@ async function iniciar() {
         scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.00).texture;
         pmrem.dispose();
 
-        scene.add(new THREE.HemisphereLight(0xffe9e2, 0x5c1420, 0.7));
-        const key = new THREE.DirectionalLight(0xffffff, 1.8);
+        scene.add(new THREE.HemisphereLight(ffecec, x5C1420, 0.7));
+        const key = new THREE.DirectionalLight(FFE3E3, 1.0);
         key.position.set(4, 5, 6);
         scene.add(key);
-        const rim = new THREE.DirectionalLight(0xff9ab0, 0.9);
+        const rim = new THREE.DirectionalLight(ff9ab0, 0.9);
         rim.position.set(-5, 1, -4);
         scene.add(rim);
 
