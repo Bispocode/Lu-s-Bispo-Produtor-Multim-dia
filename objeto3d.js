@@ -88,7 +88,7 @@ async function iniciar() {
         const camera = new THREE.PerspectiveCamera(
             40, container.clientWidth / container.clientHeight, 0.1, 100
         );
-        camera.position.set(0, 0.2, 8.5);
+        camera.position.set(0, 0.5, 8.5);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -151,6 +151,8 @@ async function iniciar() {
                 modelo.scale.setScalar(5.4 / maxDim);
 
                 scene.add(modelo);
+
+                if (statusEl) statusEl.hidden = true;
 
                                 scene.add(modelo);
 

@@ -205,7 +205,7 @@ textarea:focus-visible,
     display:inline-flex;
     align-items:center;
     gap:14px;
-    animation:rolar 32s linear infinite;
+    animation:rolar 96s linear infinite;
     font-family:var(--display);
     font-weight:600;
     font-size:1.15rem;
