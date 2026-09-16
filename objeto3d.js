@@ -152,7 +152,10 @@ async function iniciar() {
 
                 scene.add(modelo);
 
+                                scene.add(modelo);
+
                 if (statusEl) statusEl.hidden = true;
+                if (fallbackEl) fallbackEl.hidden = true;   // <— some com a imagem estática
 
             },
             undefined,

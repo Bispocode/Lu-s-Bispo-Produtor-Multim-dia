@@ -373,14 +373,18 @@ textarea:focus-visible,
     position:relative;
     overflow:hidden;
 }
-.sobre-objeto canvas{ display:block; }
+.sobre-objeto canvas{
+    position:absolute;
+    inset:0;
+    width:100% !important;
+    height:100% !important;
+}
 .objeto-status{
     color:var(--red-deep);
     font-weight:600;
     font-size:.9rem;
 }
 .objeto-fallback{ width:50%; }
-
 /* =========================================================
    CONTATO
 ========================================================= */
