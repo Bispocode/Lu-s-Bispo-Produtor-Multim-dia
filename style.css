@@ -175,14 +175,14 @@ textarea:focus-visible,
 .scroll-cue{
     position:absolute;
     bottom:36px; left:var(--pad);
-    width:26px; height:42px;
+    width:42px; height:42px;
     border:2px solid var(--ink);
-    border-radius:14px;
+    border-radius:7px;
     opacity:.45;
 }
 .scroll-cue span{
     position:absolute; top:8px; left:50%;
-    width:4px; height:8px;
+    width:8px; height:8px;
     background:var(--red);
     border-radius:2px;
     transform:translateX(-50%);
@@ -375,7 +375,7 @@ textarea:focus-visible,
 
 .sobre-skills li:hover, li:focus-visible{ 
 transform:translateY(-6px); 
-color: solid var(--bg);
+color:var(--bg);
 background: var(--red);
 }
 
