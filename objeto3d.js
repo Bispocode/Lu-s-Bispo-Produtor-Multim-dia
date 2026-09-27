@@ -1,6 +1,7 @@
 const container = document.querySelector(".sobre-objeto");
 const statusEl = container.querySelector(".objeto-status");
 const fallbackEl = container.querySelector(".objeto-fallback");
+const MODELO_URL = "eu_comprimido.glb";
 
 const reduzirMovimento = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -109,7 +110,7 @@ async function diagnosticar(erro) {
 
     try {
         const resposta = await fetch(
-            "assets/eu.glb",
+            MODELO_URL,
             {
                 method: "HEAD",
                 cache: "no-store"
@@ -117,10 +118,10 @@ async function diagnosticar(erro) {
         );
 
         if (!resposta.ok) {
-            return `o arquivo assets/eu.glb respondeu ${resposta.status} (${resposta.statusText}) — verifique se ele existe nesse caminho.`;
+            return `o arquivo ${MODELO_URL} respondeu ${resposta.status} (${resposta.statusText}) — verifique se ele existe nesse caminho.`;
         }
     } catch {
-        return "não foi possível alcançar assets/eu.glb (caminho errado, bloqueio de CORS ou servidor fora do ar).";
+        return `não foi possível alcançar ${MODELO_URL} (caminho errado, bloqueio de CORS ou servidor fora do ar).`;
     }
 
     return (
@@ -332,7 +333,7 @@ async function iniciar() {
 
         new GLTFLoader().load(
 
-            "eu_comprimido.glb",
+            MODELO_URL,
 
             gltf => {
 

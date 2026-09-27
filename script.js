@@ -74,20 +74,36 @@ if (form) {
 
 }
 
-// ===== Transição de página dos projetos (parallax) =====
+// ===== Transição de página (parallax) =====
 const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Saída: a cor do card se expande até cobrir a tela
-document.querySelectorAll("a.proj").forEach(card => {
-    card.addEventListener("click", (event) => {
+function corDaTransicao(link) {
+    if (link.dataset.cor) return link.dataset.cor;
+
+    const fundo = getComputedStyle(link).backgroundColor;
+    const transparente = fundo === "transparent" || fundo === "rgba(0, 0, 0, 0)";
+    if (!transparente) return fundo;
+
+    // links sem fundo (voltar, menu) usam a cor do projeto ou a cor de texto do site
+    const corProjeto = getComputedStyle(document.body).getPropertyValue("--cor-projeto").trim();
+    return corProjeto || "#17130F";
+}
+
+// Saída: o elemento clicado se expande até cobrir a tela
+document.querySelectorAll("a.proj, a[data-transicao]").forEach(link => {
+    link.addEventListener("click", (event) => {
 
         // deixa o navegador agir normalmente em ctrl/cmd+clique, botão do meio etc.
         if (reduzMovimento || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
+        // link para a mesma página (ex.: âncora no próprio index) não precisa de transição
+        const destino = new URL(link.href, location.href);
+        if (destino.pathname === location.pathname) return;
+
         event.preventDefault();
 
-        const r = card.getBoundingClientRect();
-        const cor = getComputedStyle(card).backgroundColor;
+        const r = link.getBoundingClientRect();
+        const cor = corDaTransicao(link);
 
         const cortina = document.createElement("div");
         cortina.className = "cortina cortina-saida";
@@ -102,7 +118,7 @@ document.querySelectorAll("a.proj").forEach(card => {
             cortina.style.clipPath = "inset(0px 0px 0px 0px round 0px)";
         }));
 
-        setTimeout(() => { window.location.href = card.href; }, 700);
+        setTimeout(() => { window.location.href = link.href; }, 700);
     });
 });
 
@@ -113,9 +129,8 @@ window.addEventListener("pageshow", (event) => {
     document.querySelectorAll(".cortina-saida").forEach(el => el.remove());
 });
 
-// Entrada: a cortina sobe e revela o conteúdo em camadas
-if (document.body.classList.contains("pagina-projeto")) {
-
+// Entrada: se a página foi aberta por uma transição, a cortina sobe e revela o conteúdo em camadas
+{
     let cor = null;
     try {
         cor = sessionStorage.getItem("corTransicao");
@@ -134,23 +149,47 @@ if (document.body.classList.contains("pagina-projeto")) {
     }
 }
 
-// Parallax da capa ao rolar
-const capaImg = document.querySelector(".projeto-capa-moldura img");
+// ===== Página de projeto =====
+if (document.body.classList.contains("pagina-projeto")) {
 
-if (capaImg && !reduzMovimento) {
+    // Imagem que não carregou vira uma moldura vazia em vez do ícone de imagem quebrada
+    document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img").forEach(img => {
+        const marcarVazia = () => img.classList.add("img-vazia");
+        if (img.complete && img.naturalWidth === 0) marcarVazia();
+        else img.addEventListener("error", marcarVazia);
+    });
 
-    let agendado = false;
+    if (!reduzMovimento) {
 
-    const moverCapa = () => {
-        const r = capaImg.parentElement.getBoundingClientRect();
-        const desloc = (r.top + r.height / 2 - window.innerHeight / 2) * -0.1;
-        capaImg.style.transform = `translateY(${desloc}px) scale(1.12)`;
-        agendado = false;
-    };
+        // Revelar blocos ao rolar
+        document.body.classList.add("js-revelar");
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach(entrada => {
+                if (!entrada.isIntersecting) return;
+                entrada.target.classList.add("visivel");
+                observador.unobserve(entrada.target);
+            });
+        }, { rootMargin: "0px 0px -10% 0px" });
+        document.querySelectorAll(".revelar").forEach(el => observador.observe(el));
 
-    window.addEventListener("scroll", () => {
-        if (!agendado) { agendado = true; requestAnimationFrame(moverCapa); }
-    }, { passive: true });
+        // Parallax: cada imagem se move um pouco mais devagar que a página
+        const imagens = document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img");
+        let agendado = false;
 
-    moverCapa();
+        const moverImagens = () => {
+            imagens.forEach(img => {
+                const r = img.parentElement.getBoundingClientRect();
+                if (r.bottom < 0 || r.top > window.innerHeight) return;
+                const desloc = (r.top + r.height / 2 - window.innerHeight / 2) * -0.1;
+                img.style.transform = `translateY(${desloc}px) scale(1.12)`;
+            });
+            agendado = false;
+        };
+
+        window.addEventListener("scroll", () => {
+            if (!agendado) { agendado = true; requestAnimationFrame(moverImagens); }
+        }, { passive: true });
+
+        moverImagens();
+    }
 }

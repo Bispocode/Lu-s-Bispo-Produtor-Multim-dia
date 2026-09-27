@@ -6,35 +6,58 @@
 <title>[[Nome do Projeto]] — Luís Bispo</title>
 <meta name="description" content="[[Resumo de uma linha sobre o projeto]]">
 <meta name="theme-color" content="#D7263D">
+
+<!-- Esta é a página MODELO: remova a linha abaixo nas páginas de projeto reais -->
+<meta name="robots" content="noindex">
+
+<link rel="canonical" href="https://lu-s-bispo-produtor-multim-dia.vercel.app/[[slug]].html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Luís Bispo">
+<meta property="og:url" content="https://lu-s-bispo-produtor-multim-dia.vercel.app/[[slug]].html">
+<meta property="og:title" content="[[Nome do Projeto]] — Luís Bispo">
+<meta property="og:description" content="[[Resumo de uma linha sobre o projeto]]">
+<meta property="og:image" content="https://lu-s-bispo-produtor-multim-dia.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="icon" type="image/png" href="Favicon.png">
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 </head>
-<body class="pagina-projeto">
+
+<!-- --cor-projeto: cor de destaque deste projeto (etiqueta, números, card de próximo projeto) -->
+<body class="pagina-projeto" style="--cor-projeto:#D7263D">
 
 <header class="site-header">
-    <a href="index.html#topo" class="mark" aria-label="Início">
+    <a href="index.html#topo" class="mark" aria-label="Início" data-transicao>
         <img src="Favicon.png" alt="">
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menu">
         <span></span><span></span><span></span>
     </button>
     <nav id="nav-menu" class="nav">
-        <a href="index.html#projetos">Projetos</a>
-        <a href="index.html#trajetoria">Trajetória</a>
-        <a href="index.html#sobre">Sobre</a>
-        <a href="index.html#contato" class="nav-cta">Contato</a>
+        <a href="index.html#projetos" data-transicao>Projetos</a>
+        <a href="index.html#trajetoria" data-transicao>Trajetória</a>
+        <a href="index.html#sobre" data-transicao>Sobre</a>
+        <a href="index.html#contato" class="nav-cta" data-transicao>Contato</a>
     </nav>
 </header>
 
 <main>
 
+    <!-- ===================== ABERTURA ===================== -->
     <section class="projeto-hero">
-        <a href="index.html#projetos" class="voltar">← Voltar aos projetos</a>
+        <a href="index.html#projetos" class="voltar" data-transicao>← Voltar aos projetos</a>
 
-        <span class="proj-tag">[[Categoria — ex: Design Gráfico]]</span>
+        <div class="projeto-hero-topo">
+            <span class="proj-tag">[[Categoria — ex: Design Gráfico]]</span>
+            <span class="projeto-numero">[[01]] <i>/ [[04]]</i></span>
+        </div>
+
         <h1>[[Nome do Projeto]]</h1>
         <p class="projeto-resumo">[[Resumo de uma ou duas linhas sobre o projeto.]]</p>
 
@@ -52,20 +75,75 @@
         </div>
     </section>
 
-    <section class="projeto-texto">
-        <p>[[Parágrafo sobre o contexto e o desafio do projeto.]]</p>
-        <p>[[Parágrafo sobre o processo e a solução.]]</p>
+    <!-- ===================== DESAFIO ===================== -->
+    <section class="projeto-bloco revelar">
+        <h2 class="projeto-rotulo"><span>01</span> O desafio</h2>
+        <div class="projeto-bloco-texto">
+            <p class="projeto-lead">[[Uma frase forte que resume o problema ou a oportunidade.]]</p>
+            <p>[[Parágrafo sobre o contexto: quem é o cliente, qual era a necessidade e por que o projeto existe.]]</p>
+        </div>
     </section>
 
+    <!-- ===================== PROCESSO ===================== -->
+    <section class="projeto-bloco revelar">
+        <h2 class="projeto-rotulo"><span>02</span> O processo</h2>
+        <div class="projeto-bloco-texto">
+            <p>[[Parágrafo sobre pesquisa, referências e primeiras ideias.]]</p>
+            <p>[[Parágrafo sobre as decisões de design, testes e ajustes até a solução final.]]</p>
+        </div>
+    </section>
+
+    <!-- ===================== GALERIA ===================== -->
     <section class="projeto-galeria">
-        <img src="assets/projetos/[[slug]]/01.jpg" alt="">
-        <img src="assets/projetos/[[slug]]/02.jpg" alt="">
-        <img src="assets/projetos/[[slug]]/03.jpg" alt="">
+        <figure class="galeria-item galeria-larga revelar">
+            <img src="assets/projetos/[[slug]]/01.jpg" alt="[[Descrição da imagem 01]]" loading="lazy">
+            <figcaption>[[Legenda opcional]]</figcaption>
+        </figure>
+        <figure class="galeria-item revelar">
+            <img src="assets/projetos/[[slug]]/02.jpg" alt="[[Descrição da imagem 02]]" loading="lazy">
+        </figure>
+        <figure class="galeria-item revelar">
+            <img src="assets/projetos/[[slug]]/03.jpg" alt="[[Descrição da imagem 03]]" loading="lazy">
+        </figure>
+        <figure class="galeria-item galeria-alta revelar">
+            <img src="assets/projetos/[[slug]]/04.jpg" alt="[[Descrição da imagem 04]]" loading="lazy">
+        </figure>
+        <figure class="galeria-item galeria-media revelar">
+            <img src="assets/projetos/[[slug]]/05.jpg" alt="[[Descrição da imagem 05]]" loading="lazy">
+            <figcaption>[[Legenda opcional]]</figcaption>
+        </figure>
     </section>
 
-    <nav class="projeto-nav-prox">
-        <a href="[[projeto-anterior.html]]">← Projeto anterior</a>
-        <a href="[[projeto-proximo.html]]">Próximo projeto →</a>
+    <!-- ===================== DESTAQUE ===================== -->
+    <blockquote class="projeto-destaque revelar">
+        <p>[[Uma frase de destaque — uma ideia central do projeto ou um depoimento do cliente.]]</p>
+        <cite>[[Nome, cargo — opcional]]</cite>
+    </blockquote>
+
+    <!-- ===================== RESULTADO ===================== -->
+    <section class="projeto-bloco revelar">
+        <h2 class="projeto-rotulo"><span>03</span> O resultado</h2>
+        <div class="projeto-bloco-texto">
+            <p>[[Parágrafo sobre o que foi entregue e o impacto do projeto.]]</p>
+
+            <ul class="projeto-numeros">
+                <li><strong>[[+40%]]</strong><span>[[de engajamento]]</span></li>
+                <li><strong>[[12]]</strong><span>[[peças entregues]]</span></li>
+                <li><strong>[[3 sem.]]</strong><span>[[de produção]]</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===================== PRÓXIMO PROJETO ===================== -->
+    <!-- Troque os links abaixo pelas páginas dos projetos anterior e seguinte -->
+    <nav class="projeto-navegacao" aria-label="Outros projetos">
+        <a href="index.html#projetos" class="projeto-anterior" data-transicao>← Projeto anterior</a>
+
+        <a href="index.html#projetos" class="projeto-seguinte" data-transicao>
+            <span class="projeto-seguinte-rotulo">Próximo projeto</span>
+            <span class="projeto-seguinte-nome">[[Nome do próximo projeto]]</span>
+            <span class="projeto-seguinte-seta" aria-hidden="true">→</span>
+        </a>
     </nav>
 
 </main>
@@ -73,7 +151,7 @@
 <footer class="site-footer">
     <img src="Favicon.png" alt="">
     <p>Luís Bispo de Andrade — © <span id="ano"></span></p>
-    <a href="index.html#topo">Voltar ao topo</a>
+    <a href="#">Voltar ao topo</a>
 </footer>
 
 <script src="script.js"></script>

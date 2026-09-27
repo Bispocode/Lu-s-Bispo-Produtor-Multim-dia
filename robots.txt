@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lu-s-bispo-produtor-multim-dia.vercel.app/sitemap.xml
