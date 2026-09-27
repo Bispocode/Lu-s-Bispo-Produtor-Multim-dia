@@ -269,6 +269,19 @@ textarea:focus-visible,
 .proj:nth-child(5n+1) .proj-tag{ opacity:.85; }
 .proj:hover, .proj:focus-visible{ transform:translateY(-6px); }
 
+a.proj{ cursor:pointer; }
+a.proj::after{
+    content:"↗";
+    position:absolute;
+    top:20px; right:22px;
+    font-size:1.4rem;
+    line-height:1;
+    opacity:0;
+    transform:translate(-6px, 6px);
+    transition:opacity .3s ease, transform .3s ease;
+}
+a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
+
 .proj-a{ grid-column:span 3; grid-row:span 2; }
 .proj-b{ grid-column:span 3; grid-row:span 2; }
 .proj-c{ grid-column:span 2; grid-row:span 2; }
@@ -577,8 +590,10 @@ background: var(--red);
     padding:0 var(--pad);
 }
 .projeto-hero{ padding-top:140px; padding-bottom:48px; }
+.projeto-hero .proj-tag{ display:inline-block; }
 .voltar{
-    display:inline-block;
+    display:block;
+    width:fit-content;
     margin-bottom:32px;
     color:var(--graphite);
     font-weight:600;
@@ -607,7 +622,19 @@ background: var(--red);
 }
 .projeto-ficha dd{ font-weight:600; }
 .projeto-capa{ max-width:var(--wrap); margin:0 auto 64px; padding:0 var(--pad); }
-.projeto-capa img{ width:100%; border-radius:4px; }
+.projeto-capa-moldura{
+    aspect-ratio:16 / 9;
+    border-radius:26px;
+    overflow:hidden;
+    background:var(--pink);
+}
+.projeto-capa-moldura img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.12);
+    will-change:transform;
+}
 .projeto-texto{ display:grid; gap:20px; max-width:760px; margin-bottom:64px; font-size:1.05rem; }
 .projeto-galeria{
     display:grid;
@@ -629,6 +656,44 @@ background: var(--red);
     font-weight:700;
 }
 .projeto-nav-prox a:hover{ color:var(--red); }
+
+/* =========================================================
+   TRANSIÇÃO DE PÁGINA (parallax)
+========================================================= */
+.cortina{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    pointer-events:none;
+}
+
+/* Saída: o card se expande e a página sobe mais devagar */
+.cortina-saida{ transition:clip-path .7s cubic-bezier(.76,0,.24,1); }
+body.saindo main{
+    transform:translateY(-8vh) scale(.97);
+    opacity:.6;
+    transition:transform .7s cubic-bezier(.76,0,.24,1), opacity .7s ease;
+}
+
+/* Entrada: a cortina sobe rápido e o conteúdo vem em camadas */
+.cortina-entrada{ animation:cortina-sobe .9s cubic-bezier(.76,0,.24,1) .1s both; }
+@keyframes cortina-sobe{
+    to{ transform:translateY(-100%); }
+}
+@keyframes camada-sobe{
+    from{ transform:translateY(var(--desloc, 80px)); opacity:0; }
+    to{ transform:none; opacity:1; }
+}
+body.entrando .projeto-hero > *,
+body.entrando .projeto-capa{
+    animation:camada-sobe 1.1s cubic-bezier(.22,1,.36,1) both;
+}
+body.entrando .voltar{ --desloc:40px; animation-delay:.45s; }
+body.entrando .projeto-hero .proj-tag{ --desloc:70px; animation-delay:.5s; }
+body.entrando .projeto-hero h1{ --desloc:110px; animation-delay:.55s; }
+body.entrando .projeto-resumo{ --desloc:150px; animation-delay:.62s; }
+body.entrando .projeto-ficha{ --desloc:190px; animation-delay:.7s; }
+body.entrando .projeto-capa{ --desloc:260px; animation-delay:.75s; }
 
 /* =========================================================
    RESPONSIVO
@@ -676,4 +741,5 @@ background: var(--red);
     .faixa-track{ animation:none; }
     .scroll-cue span{ animation:none; }
     .proj{ transition:none; }
+    .projeto-capa-moldura img{ transform:none; }
 }
