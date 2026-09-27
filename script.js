@@ -149,47 +149,68 @@ window.addEventListener("pageshow", (event) => {
     }
 }
 
-// ===== Página de projeto =====
-if (document.body.classList.contains("pagina-projeto")) {
+// ===== Imagens dos projetos que ainda não existem viram moldura vazia =====
+document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img").forEach(img => {
+    const marcarVazia = () => img.classList.add("img-vazia");
+    if (img.complete && img.naturalWidth === 0) marcarVazia();
+    else img.addEventListener("error", marcarVazia);
+});
 
-    // Imagem que não carregou vira uma moldura vazia em vez do ícone de imagem quebrada
-    document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img").forEach(img => {
-        const marcarVazia = () => img.classList.add("img-vazia");
-        if (img.complete && img.naturalWidth === 0) marcarVazia();
-        else img.addEventListener("error", marcarVazia);
+// ===== Animações ao rolar (index e páginas de projeto) =====
+if (!reduzMovimento) {
+
+    // Revelar: elementos entram de baixo quando aparecem na tela.
+    // Irmãos com .revelar entram em sequência, com um pequeno atraso entre eles.
+    const revelaveis = document.querySelectorAll(".revelar");
+
+    revelaveis.forEach(el => {
+        const irmaos = [...el.parentElement.children].filter(filho => filho.classList.contains("revelar"));
+        const posicao = Math.min(irmaos.indexOf(el), 5);
+        if (posicao > 0) el.style.setProperty("--atraso", `${posicao * 0.08}s`);
     });
 
-    if (!reduzMovimento) {
+    document.body.classList.add("js-revelar");
 
-        // Revelar blocos ao rolar
-        document.body.classList.add("js-revelar");
-        const observador = new IntersectionObserver((entradas) => {
-            entradas.forEach(entrada => {
-                if (!entrada.isIntersecting) return;
-                entrada.target.classList.add("visivel");
-                observador.unobserve(entrada.target);
-            });
-        }, { rootMargin: "0px 0px -10% 0px" });
-        document.querySelectorAll(".revelar").forEach(el => observador.observe(el));
+    const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach(entrada => {
+            if (!entrada.isIntersecting) return;
+            entrada.target.classList.add("visivel");
+            observador.unobserve(entrada.target);
+        });
+    }, { rootMargin: "0px 0px -10% 0px" });
 
-        // Parallax: cada imagem se move um pouco mais devagar que a página
-        const imagens = document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img");
-        let agendado = false;
+    revelaveis.forEach(el => observador.observe(el));
 
-        const moverImagens = () => {
-            imagens.forEach(img => {
-                const r = img.parentElement.getBoundingClientRect();
-                if (r.bottom < 0 || r.top > window.innerHeight) return;
-                const desloc = (r.top + r.height / 2 - window.innerHeight / 2) * -0.1;
-                img.style.transform = `translateY(${desloc}px) scale(1.12)`;
-            });
-            agendado = false;
-        };
+    // Parallax: cada camada se move numa velocidade diferente da página
+    const imagens = document.querySelectorAll(".projeto-capa-moldura img, .galeria-item img");
+    const hero = document.querySelector(".hero");
+    const heroLogo = document.querySelector(".hero-word");
+    const heroMeta = document.querySelector(".hero-meta");
+    let agendado = false;
 
-        window.addEventListener("scroll", () => {
-            if (!agendado) { agendado = true; requestAnimationFrame(moverImagens); }
-        }, { passive: true });
+    const moverCamadas = () => {
 
-        moverImagens();
-    }
+        // topo do index: o logo fica para trás e o texto de apoio vem um pouco depois
+        if (hero && window.scrollY < hero.offsetHeight) {
+            const y = window.scrollY;
+            if (heroLogo) heroLogo.style.translate = `0 ${y * 0.35}px`;
+            if (heroMeta) heroMeta.style.translate = `0 ${y * 0.18}px`;
+        }
+
+        // imagens das páginas de projeto
+        imagens.forEach(img => {
+            const r = img.parentElement.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return;
+            const desloc = (r.top + r.height / 2 - window.innerHeight / 2) * -0.1;
+            img.style.transform = `translateY(${desloc}px) scale(1.12)`;
+        });
+
+        agendado = false;
+    };
+
+    window.addEventListener("scroll", () => {
+        if (!agendado) { agendado = true; requestAnimationFrame(moverCamadas); }
+    }, { passive: true });
+
+    moverCamadas();
 }
