@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[[Nome do Projeto]] — Luís Bispo</title>
+<meta name="description" content="[[Resumo de uma linha sobre o projeto]]">
+<meta name="theme-color" content="#D7263D">
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html#topo" class="mark" aria-label="Início">
+        <img src="Favicon.png" alt="">
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+    </button>
+    <nav id="nav-menu" class="nav">
+        <a href="index.html#projetos">Projetos</a>
+        <a href="index.html#trajetoria">Trajetória</a>
+        <a href="index.html#sobre">Sobre</a>
+        <a href="index.html#contato" class="nav-cta">Contato</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="projeto-hero">
+        <a href="index.html#projetos" class="voltar">← Voltar aos projetos</a>
+
+        <span class="proj-tag">[[Categoria — ex: Design Gráfico]]</span>
+        <h1>[[Nome do Projeto]]</h1>
+        <p class="projeto-resumo">[[Resumo de uma ou duas linhas sobre o projeto.]]</p>
+
+        <dl class="projeto-ficha">
+            <div><dt>Cliente</dt><dd>[[Cliente]]</dd></div>
+            <div><dt>Ano</dt><dd>[[2026]]</dd></div>
+            <div><dt>Papel</dt><dd>[[Direção de arte, design gráfico...]]</dd></div>
+            <div><dt>Ferramentas</dt><dd>[[Photoshop, Illustrator...]]</dd></div>
+        </dl>
+    </section>
+
+    <section class="projeto-capa">
+        <img src="assets/projetos/[[slug]]/capa.jpg" alt="[[Nome do Projeto]]">
+    </section>
+
+    <section class="projeto-texto">
+        <p>[[Parágrafo sobre o contexto e o desafio do projeto.]]</p>
+        <p>[[Parágrafo sobre o processo e a solução.]]</p>
+    </section>
+
+    <section class="projeto-galeria">
+        <img src="assets/projetos/[[slug]]/01.jpg" alt="">
+        <img src="assets/projetos/[[slug]]/02.jpg" alt="">
+        <img src="assets/projetos/[[slug]]/03.jpg" alt="">
+    </section>
+
+    <nav class="projeto-nav-prox">
+        <a href="[[projeto-anterior.html]]">← Projeto anterior</a>
+        <a href="[[projeto-proximo.html]]">Próximo projeto →</a>
+    </nav>
+
+</main>
+
+<footer class="site-footer">
+    <img src="Favicon.png" alt="">
+    <p>Luís Bispo de Andrade — © <span id="ano"></span></p>
+    <a href="index.html#topo">Voltar ao topo</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
