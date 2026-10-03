@@ -1393,3 +1393,135 @@ body.entrando .grid-projetos .proj:nth-child(5){ --desloc:300px; animation-delay
     .projeto-capa-moldura img, .galeria-item img{ transform:none; }
     .projeto-seguinte, .projeto-seguinte-seta, .voltar{ transition:none; }
 }
+
+/* =========================================================
+   TEMA SIEG — identidade visual da SIEG na página do projeto
+   Paleta institucional: Primária #005FE9 · Clara #2F8CFF · Acento #69ACFF
+   Ciano #4FC3F7 · Profunda #13346F · Base #0A1F44 · Neutro claro #F2F4F8
+   Cinza #88919E · Grafite #2A2F3A — fonte Figtree
+========================================================= */
+.tema-sieg{
+    --sieg-primaria:#005FE9;
+    --sieg-clara:#2F8CFF;
+    --sieg-acento:#69ACFF;
+    --sieg-ciano:#4FC3F7;
+    --sieg-profunda:#13346F;
+    --sieg-base:#0A1F44;
+    --sieg-neutro:#F2F4F8;
+    --sieg-cinza:#88919E;
+    --sieg-grafite:#2A2F3A;
+
+    /* os tokens do site passam a apontar para a paleta da SIEG */
+    --bg:var(--sieg-neutro);
+    --ink:var(--sieg-base);
+    --red:var(--sieg-primaria);
+    --red-deep:var(--sieg-profunda);
+    --pink:#DFE9FB;               /* azul bem claro para cards, tirado da Primária sobre o Neutro claro */
+    --graphite:var(--sieg-grafite);
+    --line:rgba(10,31,68,.12);
+    --cor-projeto:var(--sieg-primaria);
+
+    --display:"Figtree", sans-serif;
+    --body:"Figtree", sans-serif;
+}
+.tema-sieg h1,
+.tema-sieg h2,
+.tema-sieg h3{ font-weight:800; letter-spacing:-.02em; }
+.tema-sieg .site-header{ background:rgba(242,244,248,.9); }
+.tema-sieg .site-footer{ background:var(--sieg-base); }
+.tema-sieg ::selection{ background:var(--sieg-acento); color:var(--sieg-base); }
+
+/* Capa de abertura em tela cheia */
+.capa-cheia{
+    position:relative;
+    max-width:none;
+    height:100vh;
+    min-height:520px;
+    padding:0;
+    margin:0;
+}
+.capa-cheia .projeto-capa-moldura{
+    height:100%;
+    aspect-ratio:auto;
+    border-radius:0;
+    background:var(--sieg-base);
+}
+/* imagem com sobra em cima e embaixo para o parallax nunca mostrar o fundo */
+.capa-cheia .projeto-capa-moldura img{
+    position:absolute;
+    left:0; top:-12%;
+    height:124%;
+    object-position:40% 50%;
+}
+.capa-cheia .projeto-capa-moldura::after{
+    content:"";
+    position:absolute;
+    inset:auto 0 0;
+    height:22%;
+    background:linear-gradient(transparent, rgba(10,31,68,.55));
+    pointer-events:none;
+}
+.capa-seta{
+    position:absolute;
+    bottom:32px; left:50%;
+    width:40px; height:40px;
+    border:2px solid rgba(255,255,255,.7);
+    border-radius:50%;
+    transform:translateX(-50%);
+    z-index:2;
+}
+.capa-seta span{
+    position:absolute;
+    top:9px; left:50%;
+    width:9px; height:9px;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+    transform:translateX(-50%) rotate(45deg);
+    animation:capa-seta 1.8s ease infinite;
+}
+@keyframes capa-seta{
+    0%{ top:9px; opacity:1; }
+    80%{ opacity:0; }
+    100%{ top:19px; opacity:0; }
+}
+.tema-sieg .projeto-hero{ padding-top:90px; }
+
+/* Entrada pela transição: a capa chega primeiro */
+body.tema-sieg.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
+
+/* Detalhes da marca */
+.tema-sieg .projeto-hero .proj-tag{ background:var(--sieg-primaria); }
+.tema-sieg .projeto-rotulo span{ color:var(--sieg-clara); }
+.tema-sieg .ig-slide.vazia{
+    background:
+        repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,95,233,.07) 14px 28px),
+        var(--pink);
+}
+.tema-sieg .ig-avatar,
+.tema-sieg .ig-nav-avatar{ background:var(--sieg-primaria); }
+
+/* Frase de destaque vira uma faixa em azul Base */
+.tema-sieg .projeto-destaque{
+    max-width:none;
+    padding:110px max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    background:var(--sieg-base);
+    color:#fff;
+}
+.tema-sieg .projeto-destaque p::before{ color:var(--sieg-ciano); }
+.tema-sieg .projeto-destaque cite{ color:var(--sieg-acento); }
+
+/* Próximo projeto com degradê da marca */
+.tema-sieg .projeto-seguinte{
+    background:linear-gradient(120deg, var(--sieg-primaria), var(--sieg-profunda));
+}
+
+@media (max-width:900px){
+    .capa-cheia{ height:auto; min-height:0; margin-top:78px; }
+    .capa-cheia .projeto-capa-moldura{ height:auto; aspect-ratio:16 / 9; }
+    .capa-seta{ display:none; }
+    .tema-sieg .projeto-hero{ padding-top:56px; }
+    .tema-sieg .projeto-destaque{ padding-top:80px; padding-bottom:80px; }
+}
+@media (prefers-reduced-motion: reduce){
+    .capa-seta span{ animation:none; }
+}
