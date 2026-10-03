@@ -296,30 +296,104 @@ function iniciarVitrine(vitrine) {
     });
     vitrine.addEventListener("mouseleave", () => { mouseX = 0; mouseY = 0; agendar(); });
 
-    // --- Ver as artes fora do celular (grade) ---
-    // Monta uma galeria com cópias das mesmas imagens, um bloco por post.
+    // --- Ver as artes "No feed": grade do perfil do Instagram ---
+    // Cada quadrado é um carrossel: dá para passar com as setas ou arrastando,
+    // e os que ninguém está mexendo passam sozinhos, cada um no seu tempo.
     const grade = document.createElement("div");
     grade.className = "vitrine-grade";
     grade.hidden = true;
-    carrosseis.forEach((c, i) => {
-        const bloco = document.createElement("article");
-        bloco.className = "grade-post";
+    grade.innerHTML = `
+        <header class="perfil">
+            <span class="perfil-avatar">${usuario[0].toUpperCase()}</span>
+            <div>
+                <b>${usuario}</b>
+                <span><strong>${carrosseis.length}</strong> publicações</span>
+                <small>Artes criadas por Luís Bispo</small>
+            </div>
+        </header>
+        <div class="perfil-abas"><span>${icone("M3 3h18v18H3zM9 3v18M15 3v18M3 9h18M3 15h18")} Publicações</span></div>
+        <div class="feed-grade"></div>`;
+    const caixaGrade = grade.querySelector(".feed-grade");
+    const ICONE_CARROSSEL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7V4h13v13h-3"/><path d="M4 7h13v13H4z"/></svg>`;
+    const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const quadros = carrosseis.map((c, i) => {
         const titulo = c.post.dataset.titulo || `Post ${doisDigitos(i + 1)}`;
-        bloco.innerHTML = `<header><b>${doisDigitos(i + 1)}</b><span>${titulo}</span><small>${c.total > 1 ? `${c.total} slides` : "Post único"}</small></header>`;
+        const item = document.createElement("article");
+        item.className = "feed-item";
+        item.setAttribute("aria-label", titulo);
+
         const faixa = document.createElement("div");
-        faixa.className = "grade-faixa";
+        faixa.className = "feed-faixa";
         c.faixa.querySelectorAll(".ig-slide").forEach(slide => {
             const arte = slide.cloneNode(true);
-            arte.className = "grade-arte" + (slide.classList.contains("vazia") ? " vazia" : "");
+            arte.className = "feed-arte" + (slide.classList.contains("vazia") ? " vazia" : "");
             const img = arte.querySelector("img");
-            img.loading = "lazy";
             img.addEventListener("error", () => arte.classList.add("vazia"));
             faixa.appendChild(arte);
         });
-        bloco.appendChild(faixa);
-        grade.appendChild(bloco);
+        item.appendChild(faixa);
+
+        const q = { item, faixa, total: c.total, atual: 0, pausaAte: 0, pontos: [], timer: null };
+
+        if (c.total > 1) {
+            item.insertAdjacentHTML("beforeend", `
+                <span class="feed-icone">${ICONE_CARROSSEL}</span>
+                <button type="button" class="feed-seta feed-seta-ant" aria-label="Slide anterior de ${titulo}">‹</button>
+                <button type="button" class="feed-seta feed-seta-prox" aria-label="Próximo slide de ${titulo}">›</button>
+                <span class="feed-pontos">${"<i></i>".repeat(c.total)}</span>`);
+            q.pontos = [...item.querySelectorAll(".feed-pontos i")];
+            // cada carrossel tem o seu ritmo: entre 2,5 e 5 segundos
+            q.intervalo = 2500 + ((i * 1370) % 2600);
+
+            item.querySelector(".feed-seta-ant").addEventListener("click", () => { pausar(q); irPara(q, q.atual - 1); });
+            item.querySelector(".feed-seta-prox").addEventListener("click", () => { pausar(q); irPara(q, q.atual + 1); });
+
+            // arrastar com o dedo ou o mouse
+            let inicioX = null;
+            faixa.addEventListener("pointerdown", e => { inicioX = e.clientX; });
+            faixa.addEventListener("pointerup", e => {
+                if (inicioX === null) return;
+                const dx = e.clientX - inicioX;
+                inicioX = null;
+                if (Math.abs(dx) < 30) return;
+                pausar(q);
+                irPara(q, q.atual + (dx < 0 ? 1 : -1));
+            });
+            faixa.addEventListener("pointercancel", () => { inicioX = null; });
+
+            // enquanto o mouse está em cima, o carrossel espera
+            item.addEventListener("mouseenter", () => { q.emCima = true; });
+            item.addEventListener("mouseleave", () => { q.emCima = false; });
+        }
+
+        item.insertAdjacentHTML("beforeend", `<span class="feed-titulo">${titulo}</span>`);
+        caixaGrade.appendChild(item);
+        irPara(q, 0);
+        return q;
     });
     trilho.after(grade);
+
+    function irPara(q, indice) {
+        q.atual = (indice + q.total) % q.total;
+        q.faixa.style.transform = `translateX(${-q.atual * 100}%)`;
+        q.pontos.forEach((p, k) => p.classList.toggle("ativo", k === q.atual));
+    }
+    function pausar(q) { q.pausaAte = Date.now() + 7000; }
+
+    function passarSozinho(q) {
+        clearTimeout(q.timer);
+        q.timer = setTimeout(() => {
+            if (!q.emCima && Date.now() > q.pausaAte) irPara(q, q.atual + 1);
+            passarSozinho(q);
+        }, q.intervalo);
+    }
+    function autoplay(ligado) {
+        quadros.forEach(q => {
+            clearTimeout(q.timer);
+            if (ligado && q.total > 1 && !reduzMovimento) passarSozinho(q);
+        });
+    }
 
     let vendoGrade = false;
     const botoes = [...vitrine.querySelectorAll("[data-ver]")];
@@ -330,6 +404,7 @@ function iniciarVitrine(vitrine) {
         grade.hidden = !vendoGrade;
         trilho.hidden = vendoGrade;
         botoes.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.ver === modo)));
+        autoplay(vendoGrade);
         if (!vendoGrade) aplicarModo();
     }
 
