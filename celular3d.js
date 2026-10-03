@@ -73,7 +73,6 @@ function iniciarVitrine(vitrine) {
             const slide = document.createElement("figure");
             slide.className = "ig-slide";
             slide.dataset.rotulo = `Arte ${doisDigitos(i + 1)}${imagens.length > 1 ? ` · ${j + 1}/${imagens.length}` : ""}`;
-            img.decoding = "async";
             img.draggable = false;
             const marcarVazia = () => slide.classList.add("vazia");
             if (img.complete && img.naturalWidth === 0) marcarVazia();
