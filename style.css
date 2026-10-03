@@ -920,7 +920,9 @@ background: var(--red);
     letter-spacing:-.035em;
     margin-bottom:12px;
 }
-.capitulo > p{ max-width:48ch; font-size:1.15rem; color:var(--graphite); }
+.capitulo > p{ max-width:52ch; font-size:1.15rem; color:var(--graphite); }
+.capitulo > p + p{ margin-top:12px; }
+.capitulo h2{ max-width:16ch; margin-bottom:20px; }
 
 /* Desafio: faixa de cor com a frase que abre a história */
 .desafio{
@@ -938,7 +940,7 @@ background: var(--red);
     line-height:1.02;
     letter-spacing:-.03em;
 }
-.desafio-linha{ margin-top:24px; max-width:44ch; font-size:1.15rem; opacity:.75; }
+.desafio-linha{ margin-top:24px; max-width:56ch; font-size:1.15rem; opacity:.75; }
 
 /* Ferramentas: print + problema / solução */
 .ferramentas{
