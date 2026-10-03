@@ -904,20 +904,22 @@ background: var(--red);
 
 .vitrine-intro{
     max-width:var(--wrap);
-    margin:0 auto 40px;
+    margin:0 auto 20px;
     padding:0 var(--pad);
 }
 .vitrine-intro h2{
     font-size:clamp(2.2rem, 1.2rem + 4vw, 4.6rem);
     line-height:1;
     letter-spacing:-.03em;
-    margin-bottom:18px;
+    margin-bottom:10px;
 }
-.vitrine-intro p:last-child{ max-width:52ch; color:var(--graphite); font-size:1.08rem; }
+.vitrine-intro > p:not(.eyebrow){ max-width:52ch; color:var(--graphite); font-size:1.08rem; }
 
 /* No modo 3D o trilho é alto e o palco fica preso na tela enquanto se rola por ele */
 .vitrine-trilho{ position:relative; }
-.modo-3d .vitrine-trilho{ height:calc(var(--unidades, 12) * 55vh + 100vh); }
+.modo-3d .vitrine-trilho{ height:calc(var(--unidades, 12) * 55vh + 100vh); margin-top:-64px; }
+/* o texto fica por cima do palco (que sobe um pouco) para os botões continuarem clicáveis */
+.vitrine-intro{ position:relative; z-index:2; }
 
 .vitrine-palco{
     display:grid;
@@ -952,16 +954,16 @@ background: var(--red);
 }
 .vitrine-contador i{ font-style:normal; font-size:.32em; color:var(--graphite); letter-spacing:0; }
 .vitrine-titulo{
-    margin-top:18px;
+    margin-top:10px;
     font-family:var(--display);
     font-size:1.6rem;
     font-weight:700;
     line-height:1.15;
 }
-.vitrine-slide{ margin-top:6px; color:var(--graphite); font-weight:600; }
+.vitrine-slide{ margin-top:2px; color:var(--graphite); font-weight:600; }
 .vitrine-progresso{
     height:3px;
-    margin-top:26px;
+    margin-top:16px;
     border-radius:3px;
     background:var(--line);
     overflow:hidden;
@@ -974,10 +976,10 @@ background: var(--red);
     transform-origin:left;
 }
 .vitrine-dica{
-    margin-top:18px;
-    font-size:.85rem;
-    font-weight:600;
-    color:var(--graphite);
+    margin-top:14px;
+    font-size:1.15rem;
+    font-weight:700;
+    color:var(--ink);
     transition:opacity .4s ease;
 }
 .vitrine-iniciada .vitrine-dica{ opacity:0; }
@@ -991,7 +993,7 @@ background: var(--red);
 .vitrine-alternar{
     display:inline-flex;
     gap:4px;
-    margin-top:24px;
+    margin-top:16px;
     padding:4px;
     border-radius:999px;
     background:var(--pink);
@@ -1010,40 +1012,81 @@ background: var(--red);
 .vitrine.ver-grade .so-3d,
 .vitrine.ver-grade .so-toque{ display:none; }
 
-/* Grade: as artes fora do celular */
+/* "No feed": grade do perfil do Instagram */
 .vitrine-grade{
-    display:grid;
-    gap:56px;
-    max-width:var(--wrap);
+    max-width:935px;
     margin:0 auto;
     padding:0 var(--pad);
 }
 .vitrine-grade[hidden]{ display:none; }
-.grade-post header{
+
+.perfil{
     display:flex;
-    align-items:baseline;
-    gap:12px;
-    margin-bottom:16px;
-    font-family:var(--display);
+    align-items:center;
+    gap:clamp(20px, 5vw, 56px);
+    padding:8px 0 28px;
 }
-.grade-post header b{ color:var(--cor-projeto); font-size:1.1rem; }
-.grade-post header span{ font-size:1.3rem; font-weight:700; }
-.grade-post header small{ margin-left:auto; color:var(--graphite); font-size:.85rem; font-weight:600; }
-.grade-faixa{
+.perfil-avatar{
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
-    gap:14px;
+    place-items:center;
+    flex:none;
+    width:clamp(72px, 14vw, 120px);
+    aspect-ratio:1;
+    border-radius:50%;
+    background:var(--cor-projeto);
+    color:#fff;
+    font-family:var(--display);
+    font-size:clamp(1.8rem, 1rem + 3vw, 3rem);
+    font-weight:800;
+    box-shadow:0 0 0 4px var(--bg), 0 0 0 6px #e1306c;
 }
-.grade-arte{
+.perfil div{ display:grid; gap:4px; }
+.perfil b{ font-size:1.25rem; }
+.perfil strong{ font-weight:700; }
+.perfil small{ color:var(--graphite); font-size:.92rem; }
+
+.perfil-abas{
+    display:flex;
+    justify-content:center;
+    border-top:1px solid var(--line);
+    margin-bottom:4px;
+}
+.perfil-abas span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:-1px;
+    padding:14px 0;
+    border-top:1px solid var(--ink);
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+.perfil-abas svg{ width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; }
+
+.feed-grade{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:4px;
+}
+.feed-item{
     position:relative;
     aspect-ratio:4 / 5;
-    border-radius:18px;
     overflow:hidden;
     background:var(--pink);
+    touch-action:pan-y;
+    user-select:none;
 }
-.grade-arte img{ width:100%; height:100%; object-fit:cover; }
-.grade-arte.vazia img{ visibility:hidden; }
-.grade-arte.vazia::after{
+.feed-faixa{
+    display:flex;
+    height:100%;
+    transition:transform .6s cubic-bezier(.65,0,.35,1);
+}
+.feed-arte{ position:relative; flex:0 0 100%; height:100%; }
+.feed-arte img{ width:100%; height:100%; object-fit:cover; pointer-events:none; }
+.feed-arte.vazia img{ visibility:hidden; }
+.feed-arte.vazia::after{
     content:attr(data-rotulo);
     position:absolute;
     inset:0;
@@ -1051,21 +1094,76 @@ background: var(--red);
     place-items:center;
     font-family:var(--display);
     font-weight:700;
+    font-size:.9rem;
     color:var(--red-deep);
     opacity:.55;
 }
-/* no celular cada carrossel vira uma faixa que se arrasta para o lado */
-@media (max-width:900px){
-    .grade-faixa{
-        display:flex;
-        overflow-x:auto;
-        scroll-snap-type:x mandatory;
-        scrollbar-width:none;
-        margin:0 calc(var(--pad) * -1);
-        padding:0 var(--pad);
-    }
-    .grade-faixa::-webkit-scrollbar{ display:none; }
-    .grade-arte{ flex:0 0 78%; scroll-snap-align:center; }
+
+.feed-icone{
+    position:absolute;
+    top:10px; right:10px;
+    color:#fff;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));
+    pointer-events:none;
+}
+.feed-icone svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linejoin:round; }
+
+.feed-seta{
+    position:absolute;
+    top:50%;
+    width:30px; height:30px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.85);
+    color:#000;
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(-50%);
+    transition:opacity .25s ease;
+}
+.feed-seta-ant{ left:8px; }
+.feed-seta-prox{ right:8px; }
+.feed-item:hover .feed-seta,
+.feed-seta:focus-visible{ opacity:1; }
+
+.feed-pontos{
+    position:absolute;
+    left:0; right:0; bottom:10px;
+    display:flex;
+    justify-content:center;
+    gap:4px;
+    pointer-events:none;
+}
+.feed-pontos i{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:rgba(255,255,255,.5);
+    transition:background .2s ease;
+}
+.feed-pontos i.ativo{ background:#fff; }
+
+/* nome do post aparece ao passar o mouse, como as curtidas no Instagram */
+.feed-titulo{
+    position:absolute;
+    left:0; right:0; top:0;
+    padding:12px 40px 28px 12px;
+    background:linear-gradient(rgba(0,0,0,.45), transparent);
+    color:#fff;
+    font-size:.85rem;
+    font-weight:700;
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
+}
+.feed-item:hover .feed-titulo{ opacity:1; }
+
+@media (max-width:560px){
+    .feed-grade{ grid-template-columns:repeat(2, 1fr); gap:3px; }
+    .feed-seta{ display:none; }
+    .vitrine-grade{ padding:0; }
+    .perfil, .perfil-abas{ margin-left:var(--pad); margin-right:var(--pad); }
 }
 
 /* ---------- O aparelho ---------- */
