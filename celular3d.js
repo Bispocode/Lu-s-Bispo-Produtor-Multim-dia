@@ -9,6 +9,11 @@ if (vitrine) iniciarVitrine(vitrine);
 function iniciarVitrine(vitrine) {
 
     const usuario = vitrine.dataset.usuario || "sieg";
+    // foto de perfil (opcional); sem ela aparece a inicial do usuário
+    const avatar = vitrine.dataset.avatar
+        ? `<img src="${vitrine.dataset.avatar}" alt="">`
+        : usuario[0].toUpperCase();
+    vitrine.querySelectorAll(".ig-nav-avatar").forEach(el => el.innerHTML = vitrine.dataset.avatar ? avatar : "");
     const celular = vitrine.querySelector(".celular");
     const trilho = vitrine.querySelector(".vitrine-trilho");
     const rolagem = vitrine.querySelector(".ig-rolagem");
@@ -56,7 +61,7 @@ function iniciarVitrine(vitrine) {
 
         const topo = document.createElement("header");
         topo.className = "ig-post-topo";
-        topo.innerHTML = `<span class="ig-avatar">${usuario[0].toUpperCase()}</span><b>${usuario}</b><span class="ig-mais">•••</span>`;
+        topo.innerHTML = `<span class="ig-avatar">${avatar}</span><b>${usuario}</b><span class="ig-mais">•••</span>`;
 
         const carrossel = document.createElement("div");
         carrossel.className = "ig-carrossel";
@@ -309,7 +314,7 @@ function iniciarVitrine(vitrine) {
     grade.hidden = true;
     grade.innerHTML = `
         <header class="perfil">
-            <span class="perfil-avatar">${usuario[0].toUpperCase()}</span>
+            <span class="perfil-avatar">${avatar}</span>
             <div>
                 <b>${usuario}</b>
                 <span><strong>${carrosseis.length}</strong> publicações</span>
