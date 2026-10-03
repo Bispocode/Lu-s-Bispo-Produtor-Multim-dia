@@ -120,8 +120,13 @@ function iniciarVitrine(vitrine) {
             if (info.atual) info.atual.textContent = doisDigitos(indice + 1);
             if (info.titulo) info.titulo.textContent = c.post.dataset.titulo || `Post ${doisDigitos(indice + 1)}`;
         }
-        if (info.slide) {
-            info.slide.textContent = c.total > 1 ? `Slide ${c.slideMostrado + 1} de ${c.total}` : "Post único";
+        // pontinhos do slide atual, embaixo do celular
+        const chave = `${indice}-${c.slideMostrado}`;
+        if (info.slide && info.slide.dataset.chave !== chave) {
+            info.slide.dataset.chave = chave;
+            info.slide.innerHTML = c.total > 1
+                ? Array.from({ length: c.total }, (_, k) => `<i${k === c.slideMostrado ? ' class="ativo"' : ""}></i>`).join("")
+                : "";
         }
     }
     carrosseis.forEach(c => marcarSlide(c, 0));

@@ -898,6 +898,101 @@ background: var(--red);
 .frentes span{ color:var(--graphite); font-size:.98rem; }
 
 /* =========================================================
+   CAPÍTULOS — título grande + uma linha (páginas de projeto)
+========================================================= */
+.capitulo{
+    max-width:var(--wrap);
+    margin:0 auto 40px;
+    padding:0 var(--pad);
+}
+.capitulo-num{
+    display:block;
+    margin-bottom:12px;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--cor-projeto);
+}
+.capitulo h2{
+    font-size:clamp(2.6rem, 1.2rem + 5vw, 5.2rem);
+    line-height:.95;
+    letter-spacing:-.035em;
+    margin-bottom:12px;
+}
+.capitulo > p{ max-width:48ch; font-size:1.15rem; color:var(--graphite); }
+
+/* Desafio: faixa de cor com a frase que abre a história */
+.desafio{
+    margin-bottom:120px;
+    padding:110px max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    background:var(--ink);
+    color:var(--bg);
+}
+.desafio .capitulo-num{ color:var(--sieg-ciano, var(--pink)); }
+.desafio-frase{
+    max-width:18ch;
+    font-family:var(--display);
+    font-size:clamp(2.2rem, 1rem + 4.4vw, 4.6rem);
+    font-weight:800;
+    line-height:1.02;
+    letter-spacing:-.03em;
+}
+.desafio-linha{ margin-top:24px; max-width:44ch; font-size:1.15rem; opacity:.75; }
+
+/* Ferramentas: print + problema / solução */
+.ferramentas{
+    display:grid;
+    gap:64px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.ferramenta{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    align-items:center;
+    gap:48px;
+}
+.ferramenta:nth-child(even){ grid-template-columns:1fr 1.4fr; }
+.ferramenta:nth-child(even) .ferramenta-print{ order:2; }
+.ferramenta-print.galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:16 / 10; }
+.ferramenta-texto h3{ font-size:clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem); margin-bottom:18px; }
+.ferramenta-texto dl{ display:grid; gap:6px; }
+.ferramenta-texto dt{
+    margin-top:10px;
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--cor-projeto);
+}
+.ferramenta-texto dd{ font-size:1.08rem; line-height:1.5; }
+
+/* Depoimento: fecha a história */
+.depoimento{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.depoimento p{
+    max-width:22ch;
+    font-family:var(--display);
+    font-size:clamp(2rem, 1rem + 3.6vw, 3.8rem);
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:-.02em;
+}
+.depoimento cite{ display:block; margin-top:20px; font-style:normal; color:var(--graphite); font-weight:600; }
+
+@media (max-width:900px){
+    .desafio{ padding-top:80px; padding-bottom:80px; margin-bottom:80px; }
+    .ferramenta, .ferramenta:nth-child(even){ grid-template-columns:1fr; gap:20px; }
+    .ferramenta:nth-child(even) .ferramenta-print{ order:0; }
+    .ferramentas{ gap:48px; margin-bottom:80px; }
+}
+
+/* =========================================================
    VITRINE DE FEED — celular 3D controlado pela rolagem
 ========================================================= */
 .vitrine{ margin-bottom:120px; }
@@ -907,13 +1002,6 @@ background: var(--red);
     margin:0 auto 20px;
     padding:0 var(--pad);
 }
-.vitrine-intro h2{
-    font-size:clamp(2.2rem, 1.2rem + 4vw, 4.6rem);
-    line-height:1;
-    letter-spacing:-.03em;
-    margin-bottom:10px;
-}
-.vitrine-intro > p:not(.eyebrow){ max-width:52ch; color:var(--graphite); font-size:1.08rem; }
 
 /* No modo 3D o trilho é alto e o palco fica preso na tela enquanto se rola por ele */
 .vitrine-trilho{ position:relative; }
@@ -931,7 +1019,11 @@ background: var(--red);
     padding:0 var(--pad);
 }
 .modo-3d .vitrine-palco{
-    grid-template-columns:minmax(0, 1fr) auto minmax(0, .45fr);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
     position:sticky;
     top:0;
     height:100vh;
@@ -942,24 +1034,29 @@ background: var(--red);
 
 /* Painel ao lado do celular */
 .vitrine-info{ display:none; }
-.modo-3d .vitrine-info{ display:block; max-width:340px; }
+.modo-3d .vitrine-info{ display:grid; justify-items:center; gap:4px; text-align:center; }
 .vitrine-contador{
-    display:block;
     font-family:var(--display);
-    font-size:clamp(4rem, 2rem + 6vw, 8rem);
-    font-weight:800;
-    line-height:.9;
-    letter-spacing:-.04em;
-    color:var(--cor-projeto);
+    font-size:.9rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    color:var(--graphite);
 }
-.vitrine-contador i{ font-style:normal; font-size:.32em; color:var(--graphite); letter-spacing:0; }
+.vitrine-contador b{ color:var(--cor-projeto); }
 .vitrine-titulo{
-    margin-top:10px;
     font-family:var(--display);
-    font-size:1.6rem;
+    font-size:1.35rem;
     font-weight:700;
     line-height:1.15;
 }
+.vitrine-pontos{ display:flex; gap:6px; min-height:8px; margin-top:6px; }
+.vitrine-pontos i{
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--line);
+    transition:background .25s ease, transform .25s ease;
+}
+.vitrine-pontos i.ativo{ background:var(--cor-projeto); transform:scale(1.15); }
 .vitrine-slide{ margin-top:2px; color:var(--graphite); font-weight:600; }
 .vitrine-progresso{
     height:3px;
@@ -1169,7 +1266,7 @@ background: var(--red);
 /* ---------- O aparelho ---------- */
 .celular-cena{
     position:relative;
-    height:min(680px, calc(100vh - 150px));
+    height:min(640px, calc(100vh - 270px));
     aspect-ratio:9 / 19.5;
     margin:0 auto;
 }
