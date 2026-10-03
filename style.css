@@ -868,6 +868,397 @@ background: var(--red);
 }
 .projeto-seguinte:hover .projeto-seguinte-seta{ transform:translateX(8px); }
 
+/* Lista de frentes de trabalho (dentro de um bloco de texto) */
+.frentes{
+    display:grid;
+    gap:14px;
+    margin-top:8px;
+    list-style:none;
+    counter-reset:frente;
+}
+.frentes li{
+    display:grid;
+    gap:6px;
+    padding:22px 22px 22px 64px;
+    border-radius:26px;
+    background:var(--pink);
+    position:relative;
+    counter-increment:frente;
+    line-height:1.5;
+}
+.frentes li::before{
+    content:counter(frente, decimal-leading-zero);
+    position:absolute;
+    left:22px; top:22px;
+    font-family:var(--display);
+    font-weight:700;
+    color:var(--cor-projeto);
+}
+.frentes b{ font-family:var(--display); font-size:1.15rem; }
+.frentes span{ color:var(--graphite); font-size:.98rem; }
+
+/* =========================================================
+   VITRINE DE FEED — celular 3D controlado pela rolagem
+========================================================= */
+.vitrine{ margin-bottom:120px; }
+
+.vitrine-intro{
+    max-width:var(--wrap);
+    margin:0 auto 40px;
+    padding:0 var(--pad);
+}
+.vitrine-intro h2{
+    font-size:clamp(2.2rem, 1.2rem + 4vw, 4.6rem);
+    line-height:1;
+    letter-spacing:-.03em;
+    margin-bottom:18px;
+}
+.vitrine-intro p:last-child{ max-width:52ch; color:var(--graphite); font-size:1.08rem; }
+
+/* No modo 3D o trilho é alto e o palco fica preso na tela enquanto se rola por ele */
+.vitrine-trilho{ position:relative; }
+.modo-3d .vitrine-trilho{ height:calc(var(--unidades, 12) * 55vh + 100vh); }
+
+.vitrine-palco{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:40px;
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding:0 var(--pad);
+}
+.modo-3d .vitrine-palco{
+    grid-template-columns:minmax(0, 1fr) auto minmax(0, .45fr);
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding-top:84px;
+    padding-bottom:20px;
+    perspective:1700px;
+}
+
+/* Painel ao lado do celular */
+.vitrine-info{ display:none; }
+.modo-3d .vitrine-info{ display:block; max-width:340px; }
+.vitrine-contador{
+    display:block;
+    font-family:var(--display);
+    font-size:clamp(4rem, 2rem + 6vw, 8rem);
+    font-weight:800;
+    line-height:.9;
+    letter-spacing:-.04em;
+    color:var(--cor-projeto);
+}
+.vitrine-contador i{ font-style:normal; font-size:.32em; color:var(--graphite); letter-spacing:0; }
+.vitrine-titulo{
+    margin-top:18px;
+    font-family:var(--display);
+    font-size:1.6rem;
+    font-weight:700;
+    line-height:1.15;
+}
+.vitrine-slide{ margin-top:6px; color:var(--graphite); font-weight:600; }
+.vitrine-progresso{
+    height:3px;
+    margin-top:26px;
+    border-radius:3px;
+    background:var(--line);
+    overflow:hidden;
+}
+.vitrine-progresso span{
+    display:block;
+    height:100%;
+    background:var(--cor-projeto);
+    transform:scaleX(0);
+    transform-origin:left;
+}
+.vitrine-dica{
+    margin-top:18px;
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--graphite);
+    transition:opacity .4s ease;
+}
+.vitrine-iniciada .vitrine-dica{ opacity:0; }
+
+/* texto de instrução muda conforme o modo */
+.vitrine .so-3d{ display:none; }
+.vitrine.modo-3d .so-3d{ display:inline; }
+.vitrine.modo-3d .so-toque{ display:none; }
+
+/* ---------- O aparelho ---------- */
+.celular-cena{
+    position:relative;
+    height:min(680px, calc(100vh - 150px));
+    aspect-ratio:9 / 19.5;
+    margin:0 auto;
+}
+.celular{
+    --espessura:14px;
+    --raio:13% / 6%;
+    position:absolute;
+    inset:0;
+    transform-style:preserve-3d;
+    will-change:transform;
+}
+.celular-face,
+.celular-camada{
+    position:absolute;
+    inset:0;
+    border-radius:var(--raio);
+}
+.celular-frente{
+    transform:translateZ(calc(var(--espessura) / 2));
+    backface-visibility:hidden;
+    padding:3.4%;
+    background:#0d0d0f;
+    box-shadow:inset 0 0 0 2px #3b3b42, inset 0 0 0 4px #0d0d0f;
+}
+.celular-verso{
+    transform:rotateY(180deg) translateZ(calc(var(--espessura) / 2));
+    backface-visibility:hidden;
+    background:linear-gradient(150deg, #43434a, #1d1d21 60%, #2c2c31);
+    box-shadow:inset 0 0 0 2px #55555d;
+}
+.celular-camada{ background:linear-gradient(90deg, #26262b, #4a4a52 50%, #26262b); }
+
+.celular-ilha{
+    position:absolute;
+    top:3.9%; left:50%;
+    width:30%; height:3.4%;
+    border-radius:99px;
+    background:#000;
+    transform:translateX(-50%);
+    z-index:3;
+}
+/* reflexo de vidro que acompanha o giro */
+.celular-brilho{
+    position:absolute;
+    inset:0;
+    border-radius:var(--raio);
+    background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,.16) 50%, transparent 65%) var(--brilho, 50%) 0 / 300% 100%;
+    pointer-events:none;
+    z-index:4;
+}
+.celular-cameras{
+    position:absolute;
+    top:4%; left:7%;
+    width:40%;
+    aspect-ratio:1;
+    border-radius:28%;
+    background:rgba(255,255,255,.07);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.celular-cameras i{
+    position:absolute;
+    width:38%; aspect-ratio:1;
+    border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, #2f3a4a, #08080a 60%);
+    box-shadow:0 0 0 3px #1a1a1e, 0 0 0 4px #4a4a52;
+}
+.celular-cameras i:nth-child(1){ top:8%; left:8%; }
+.celular-cameras i:nth-child(2){ top:54%; left:8%; }
+.celular-cameras i:nth-child(3){ top:31%; left:54%; }
+.celular-cameras b{
+    position:absolute;
+    top:12%; right:14%;
+    width:12%; aspect-ratio:1;
+    border-radius:50%;
+    background:#e9e2cf;
+}
+.celular-logo{
+    position:absolute;
+    top:50%; left:50%;
+    width:18%;
+    transform:translate(-50%, -50%);
+    opacity:.75;
+}
+.celular-sombra{
+    position:absolute;
+    left:8%; right:8%;
+    bottom:-34px;
+    height:26px;
+    border-radius:50%;
+    background:radial-gradient(closest-side, rgba(23,19,15,.28), transparent);
+    filter:blur(4px);
+}
+
+/* Fora do modo 3D: só a frente, sem perspectiva */
+.vitrine:not(.modo-3d) .celular-verso,
+.vitrine:not(.modo-3d) .celular-camada{ display:none; }
+.vitrine:not(.modo-3d) .celular-frente{ transform:none; }
+
+/* ---------- Tela: perfil do Instagram em modo "Publicações" ---------- */
+.celular-tela{
+    position:relative;
+    height:100%;
+    display:grid;
+    grid-template-rows:auto auto 1fr auto;
+    overflow:hidden;
+    border-radius:11% / 5.2%;
+    background:#fff;
+    color:#000;
+    font-family:-apple-system, BlinkMacSystemFont, "Instrument Sans", sans-serif;
+    font-size:12px;
+    line-height:1.35;
+}
+.celular-tela svg{
+    width:22px; height:22px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.ig-status{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 22px 14px 26px;
+    font-weight:700;
+    font-size:13px;
+}
+.ig-status-icones{ display:flex; align-items:center; gap:5px; }
+.ig-status-icones i{ display:block; background:#000; }
+.ig-sinal{ width:15px; height:9px; clip-path:polygon(0 100%, 100% 0, 100% 100%); }
+.ig-wifi{ width:13px; height:9px; clip-path:polygon(50% 100%, 0 25%, 20% 0, 80% 0, 100% 25%); }
+.ig-bateria{ width:22px; height:10px; border-radius:3px; box-shadow:inset 0 0 0 1.5px #fff, 0 0 0 1px #000; }
+
+.ig-topo{
+    display:grid;
+    grid-template-columns:28px 1fr 28px;
+    align-items:center;
+    padding:4px 10px 8px;
+    border-bottom:1px solid #efefef;
+    text-align:center;
+}
+.ig-topo small{ display:block; font-size:10px; font-weight:600; color:#737373; letter-spacing:.02em; }
+.ig-topo b{ font-size:15px; }
+
+.ig-rolagem{ position:relative; overflow:hidden; }
+.ig-feed{ position:relative; will-change:transform; }
+
+.ig-post{ padding-bottom:14px; }
+.ig-post-topo{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    font-size:12.5px;
+}
+.ig-avatar{
+    display:grid;
+    place-items:center;
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--cor-projeto);
+    color:#fff;
+    font-weight:800;
+    font-size:12px;
+    box-shadow:0 0 0 2px #fff, 0 0 0 3.5px #e1306c;
+}
+.ig-mais{ margin-left:auto; font-size:10px; letter-spacing:1px; }
+
+.ig-carrossel{
+    position:relative;
+    overflow:hidden;
+    background:#f2f2f2;
+}
+.ig-slides{ display:flex; will-change:transform; }
+.ig-slide{
+    position:relative;
+    flex:0 0 100%;
+    aspect-ratio:4 / 5;
+    overflow:hidden;
+}
+.ig-slide img{ width:100%; height:100%; object-fit:cover; user-select:none; }
+/* Arte ainda não enviada: mostra um bloco com o nome do slide */
+.ig-slide.vazia{
+    background:
+        repeating-linear-gradient(135deg, transparent 0 14px, rgba(215,38,61,.06) 14px 28px),
+        var(--pink);
+}
+.ig-slide.vazia img{ visibility:hidden; }
+.ig-slide.vazia::after{
+    content:attr(data-rotulo);
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    font-family:var(--display);
+    font-size:15px;
+    font-weight:700;
+    color:var(--red-deep);
+    opacity:.6;
+}
+.ig-selo{
+    position:absolute;
+    top:10px; right:10px;
+    padding:3px 8px;
+    border-radius:99px;
+    background:rgba(0,0,0,.65);
+    color:#fff;
+    font-size:11px;
+    font-weight:600;
+}
+
+.ig-acoes{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    padding:8px 10px 4px;
+}
+.ig-acoes > svg{ justify-self:end; }
+.ig-acoes-esq{ display:flex; gap:12px; }
+.ig-acoes-esq svg:first-child{ transition:fill .3s ease, stroke .3s ease, transform .3s ease; }
+/* o post em destaque ganha a curtida */
+.ig-post-ativo .ig-acoes-esq svg:first-child{ fill:#ff3040; stroke:#ff3040; transform:scale(1.08); }
+.ig-pontos{ display:flex; gap:4px; }
+.ig-pontos i{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:#c7c7c7;
+    transition:background .2s ease, transform .2s ease;
+}
+.ig-pontos i.ativo{ background:#0095f6; transform:scale(1.1); }
+
+.ig-legenda{ padding:4px 10px 0; font-size:12px; }
+.ig-legenda b{ font-weight:700; }
+
+.ig-nav{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:10px 6px 18px;
+    border-top:1px solid #efefef;
+    background:#fff;
+}
+.ig-nav-avatar{
+    width:22px; height:22px;
+    border-radius:50%;
+    background:var(--cor-projeto);
+    box-shadow:0 0 0 1.5px #000 inset, 0 0 0 1.5px #fff inset;
+}
+
+/* Fora do modo 3D o feed e os carrosséis rolam com o dedo */
+.vitrine:not(.modo-3d) .ig-rolagem{
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scrollbar-width:none;
+}
+.vitrine:not(.modo-3d) .ig-carrossel{
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+}
+.vitrine:not(.modo-3d) .ig-rolagem::-webkit-scrollbar,
+.vitrine:not(.modo-3d) .ig-carrossel::-webkit-scrollbar{ display:none; }
+.vitrine:not(.modo-3d) .ig-slide{ scroll-snap-align:start; }
+.vitrine:not(.modo-3d) .vitrine-palco{ grid-template-columns:1fr; }
+.vitrine:not(.modo-3d) .celular-cena{ height:min(640px, 78svh); }
+
 /* =========================================================
    ANIMAÇÕES AO ROLAR (index e páginas de projeto)
 ========================================================= */
