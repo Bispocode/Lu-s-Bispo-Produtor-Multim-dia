@@ -137,7 +137,8 @@ window.addEventListener("pageshow", (event) => {
         sessionStorage.removeItem("corTransicao");
     } catch (erro) {}
 
-    if (cor && !reduzMovimento) {
+    // páginas com troca de IDV (troca-idv.js) têm a própria abertura no lugar da cortina
+    if (cor && !reduzMovimento && !document.body.dataset.idvMarca) {
         const cortina = document.createElement("div");
         cortina.className = "cortina cortina-entrada";
         cortina.style.background = cor;
