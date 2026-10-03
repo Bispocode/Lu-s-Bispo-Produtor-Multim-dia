@@ -30,6 +30,15 @@
 </head>
 
 <!-- --cor-projeto: cor de destaque deste projeto (etiqueta, números, card de próximo projeto) -->
+<!-- Abertura com troca de IDV (opcional): a página abre com a sua identidade e é repintada pela do cliente.
+     Para ativar, adicione no <body> os atributos abaixo e coloque <script src="troca-idv.js"></script>
+     logo depois de abrir o <body>. Carregue a fonte do cliente no <head>. Exemplo em sieg.html.
+       data-idv-marca="[[Nome do cliente]]"
+       data-idv-descricao="[[Linha de apoio]]"
+       data-idv-logo="assets/projetos/[[slug]]/logo-claro.svg"   (opcional; sem ele aparece o nome)
+       data-idv-fundo="[[#cor de fundo]]" data-idv-texto="[[#cor do texto]]" data-idv-destaque="[[#cor do rótulo]]"
+       data-idv-cores="[[#cor1 #cor2 #cor3 #cor4]]"
+       data-idv-fonte="[[Fonte da marca]]" -->
 <body class="pagina-projeto" style="--cor-projeto:#D7263D">
 
 <header class="site-header">
