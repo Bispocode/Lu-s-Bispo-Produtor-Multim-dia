@@ -165,6 +165,16 @@ function iniciarVitrine(vitrine) {
 
         trilho.style.setProperty("--unidades", unidades.toFixed(2));
 
+        // cada post precisa caber inteiro na tela; se não couber, a arte estreita um pouco
+        feed.style.removeProperty("--arte-largura");
+        const maiorPost = Math.max(...carrosseis.map(c => c.post.offsetHeight));
+        const falta = maiorPost - rolagem.clientHeight;
+        if (falta > 0) {
+            const alturaArte = carrosseis[0].carrossel.offsetHeight;
+            const proporcao = Math.max(.6, (alturaArte - falta) / alturaArte);
+            feed.style.setProperty("--arte-largura", `${(proporcao * 100).toFixed(2)}%`);
+        }
+
         const limite = Math.max(0, feed.scrollHeight - rolagem.clientHeight);
         alturaPosts = carrosseis.map(c => Math.min(c.post.offsetTop, limite));
     }
