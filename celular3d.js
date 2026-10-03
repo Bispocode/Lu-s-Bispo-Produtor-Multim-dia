@@ -258,7 +258,7 @@ function iniciarVitrine(vitrine) {
     }
 
     function agendar() {
-        if (!modo3d) return;
+        if (!modo3d || vendoGrade) return;
         calcularAlvo();
         if (!rodando) { rodando = true; requestAnimationFrame(desenhar); }
     }
@@ -296,5 +296,52 @@ function iniciarVitrine(vitrine) {
     });
     vitrine.addEventListener("mouseleave", () => { mouseX = 0; mouseY = 0; agendar(); });
 
+    // --- Ver as artes fora do celular (grade) ---
+    // Monta uma galeria com cópias das mesmas imagens, um bloco por post.
+    const grade = document.createElement("div");
+    grade.className = "vitrine-grade";
+    grade.hidden = true;
+    carrosseis.forEach((c, i) => {
+        const bloco = document.createElement("article");
+        bloco.className = "grade-post";
+        const titulo = c.post.dataset.titulo || `Post ${doisDigitos(i + 1)}`;
+        bloco.innerHTML = `<header><b>${doisDigitos(i + 1)}</b><span>${titulo}</span><small>${c.total > 1 ? `${c.total} slides` : "Post único"}</small></header>`;
+        const faixa = document.createElement("div");
+        faixa.className = "grade-faixa";
+        c.faixa.querySelectorAll(".ig-slide").forEach(slide => {
+            const arte = slide.cloneNode(true);
+            arte.className = "grade-arte" + (slide.classList.contains("vazia") ? " vazia" : "");
+            const img = arte.querySelector("img");
+            img.loading = "lazy";
+            img.addEventListener("error", () => arte.classList.add("vazia"));
+            faixa.appendChild(arte);
+        });
+        bloco.appendChild(faixa);
+        grade.appendChild(bloco);
+    });
+    trilho.after(grade);
+
+    let vendoGrade = false;
+    const botoes = [...vitrine.querySelectorAll("[data-ver]")];
+
+    function verComo(modo) {
+        vendoGrade = modo === "grade";
+        vitrine.classList.toggle("ver-grade", vendoGrade);
+        grade.hidden = !vendoGrade;
+        trilho.hidden = vendoGrade;
+        botoes.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.ver === modo)));
+        if (!vendoGrade) aplicarModo();
+    }
+
+    botoes.forEach(botao => botao.addEventListener("click", () => {
+        verComo(botao.dataset.ver);
+        try { localStorage.setItem("vitrineVer", botao.dataset.ver); } catch (erro) {}
+    }));
+
     aplicarModo();
+
+    // lembra a preferência de quem já escolheu ver só as artes
+    let preferencia = null;
+    try { preferencia = localStorage.getItem("vitrineVer"); } catch (erro) {}
+    if (preferencia === "grade") verComo("grade");
 }

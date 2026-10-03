@@ -987,6 +987,87 @@ background: var(--red);
 .vitrine.modo-3d .so-3d{ display:inline; }
 .vitrine.modo-3d .so-toque{ display:none; }
 
+/* Alternar entre celular e grade */
+.vitrine-alternar{
+    display:inline-flex;
+    gap:4px;
+    margin-top:24px;
+    padding:4px;
+    border-radius:999px;
+    background:var(--pink);
+}
+.vitrine-alternar button{
+    padding:10px 18px;
+    border:0;
+    border-radius:999px;
+    background:transparent;
+    color:var(--ink);
+    font:600 .92rem var(--body);
+    cursor:pointer;
+    transition:background .25s ease, color .25s ease;
+}
+.vitrine-alternar button[aria-pressed="true"]{ background:var(--cor-projeto); color:#fff; }
+.vitrine.ver-grade .so-3d,
+.vitrine.ver-grade .so-toque{ display:none; }
+
+/* Grade: as artes fora do celular */
+.vitrine-grade{
+    display:grid;
+    gap:56px;
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding:0 var(--pad);
+}
+.vitrine-grade[hidden]{ display:none; }
+.grade-post header{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:16px;
+    font-family:var(--display);
+}
+.grade-post header b{ color:var(--cor-projeto); font-size:1.1rem; }
+.grade-post header span{ font-size:1.3rem; font-weight:700; }
+.grade-post header small{ margin-left:auto; color:var(--graphite); font-size:.85rem; font-weight:600; }
+.grade-faixa{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+    gap:14px;
+}
+.grade-arte{
+    position:relative;
+    aspect-ratio:4 / 5;
+    border-radius:18px;
+    overflow:hidden;
+    background:var(--pink);
+}
+.grade-arte img{ width:100%; height:100%; object-fit:cover; }
+.grade-arte.vazia img{ visibility:hidden; }
+.grade-arte.vazia::after{
+    content:attr(data-rotulo);
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    font-family:var(--display);
+    font-weight:700;
+    color:var(--red-deep);
+    opacity:.55;
+}
+/* no celular cada carrossel vira uma faixa que se arrasta para o lado */
+@media (max-width:900px){
+    .grade-faixa{
+        display:flex;
+        overflow-x:auto;
+        scroll-snap-type:x mandatory;
+        scrollbar-width:none;
+        margin:0 calc(var(--pad) * -1);
+        padding:0 var(--pad);
+    }
+    .grade-faixa::-webkit-scrollbar{ display:none; }
+    .grade-arte{ flex:0 0 78%; scroll-snap-align:center; }
+}
+
 /* ---------- O aparelho ---------- */
 .celular-cena{
     position:relative;
