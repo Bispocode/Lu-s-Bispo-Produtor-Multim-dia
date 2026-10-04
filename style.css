@@ -305,13 +305,14 @@ a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
 .proj-com-capa:hover::before,
 .proj-com-capa:focus-visible::before{ transform:scale(1.05); }
 .proj-com-capa .proj-tag{ opacity:.85; }
-/* capa do Memória Amorfa: rosto mais acima e degradê no marrom do projeto */
+/* capa do Memória Amorfa: rosto mais acima, em preto e branco */
+.proj.proj-capa-amorfa{ background:#0E0E0E; color:#F4F4F4; }
 .proj-capa-amorfa::before{
     background:
-        linear-gradient(to top, rgba(42,21,13,.9), rgba(42,21,13,0) 60%),
+        linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,0) 60%),
         var(--capa) 50% 28% / cover no-repeat;
+    filter:grayscale(1);
 }
-.proj-capa-amorfa{ color:#FBDFA2; }
 .proj-b{ grid-column:span 3; grid-row:span 2; }
 .proj-c{ grid-column:span 2; grid-row:span 2; }
 .proj-d{ grid-column:span 2; grid-row:span 2; }
@@ -2125,21 +2126,22 @@ body.idv-abrindo{ overflow:hidden; }
 
 /* =========================================================
    TEMA MEMÓRIA AMORFA — identidade da instalação
-   Marrom #442216 · Creme #FBDFA2 · Manrope
+   Preto #0E0E0E · Branco #F4F4F4 · Cinzas #9A9A9A / #3A3A3A · Manrope
 ========================================================= */
 .tema-amorfa{
-    --amorfa-marrom:#442216;
-    --amorfa-creme:#FBDFA2;
-    --amorfa-escuro:#2A150D;
+    --amorfa-preto:#0E0E0E;
+    --amorfa-branco:#F4F4F4;
+    --amorfa-cinza:#9A9A9A;
+    --amorfa-escuro:#000000;
 
-    --bg:var(--amorfa-marrom);
-    --ink:var(--amorfa-creme);
-    --red:var(--amorfa-creme);
-    --red-deep:var(--amorfa-creme);
-    --pink:#5A3123;                 /* marrom mais claro: molduras e fundos de imagem */
-    --graphite:rgba(251,223,162,.72);
-    --line:rgba(251,223,162,.2);
-    --cor-projeto:var(--amorfa-creme);
+    --bg:var(--amorfa-preto);
+    --ink:var(--amorfa-branco);
+    --red:var(--amorfa-branco);
+    --red-deep:var(--amorfa-branco);
+    --pink:#1C1C1C;                 /* cinza bem escuro: molduras e fundos de imagem */
+    --graphite:rgba(244,244,244,.62);
+    --line:rgba(244,244,244,.16);
+    --cor-projeto:var(--amorfa-branco);
 
     --display:"Manrope", sans-serif;
     --body:"Manrope", sans-serif;
@@ -2147,16 +2149,15 @@ body.idv-abrindo{ overflow:hidden; }
 .tema-amorfa h1,
 .tema-amorfa h2,
 .tema-amorfa h3{ font-weight:800; letter-spacing:-.04em; }
-.tema-amorfa .site-header{ background:rgba(68,34,22,.9); }
+.tema-amorfa .site-header{ background:rgba(14,14,14,.9); }
 .tema-amorfa .site-footer{ background:var(--amorfa-escuro); }
-.tema-amorfa ::selection{ background:var(--amorfa-creme); color:var(--amorfa-marrom); }
-.tema-amorfa .projeto-hero .proj-tag{ color:var(--amorfa-marrom); }
-.tema-amorfa .projeto-seguinte{ color:var(--amorfa-marrom); }
-.projeto-equipe{ margin-top:14px; max-width:60ch; font-size:.95rem; color:var(--graphite); }
+.tema-amorfa ::selection{ background:var(--amorfa-branco); color:var(--amorfa-preto); }
+.tema-amorfa .projeto-hero .proj-tag{ color:var(--amorfa-preto); }
+.tema-amorfa .projeto-seguinte{ color:var(--amorfa-preto); }
 
 /* capa com o título do memorial por cima do rosto */
-.capa-amorfa .projeto-capa-moldura::after{ background:linear-gradient(transparent 40%, rgba(42,21,13,.75)); height:100%; }
-.capa-amorfa .projeto-capa-moldura img{ object-position:50% 30%; filter:saturate(.85); }
+.capa-amorfa .projeto-capa-moldura::after{ background:linear-gradient(transparent 40%, rgba(0,0,0,.75)); height:100%; }
+.capa-amorfa .projeto-capa-moldura img{ object-position:50% 30%; filter:grayscale(1) contrast(1.05); }
 .capa-titulo{
     position:absolute;
     inset:0;
@@ -2164,7 +2165,7 @@ body.idv-abrindo{ overflow:hidden; }
     display:grid;
     place-content:center;
     justify-items:center;
-    color:var(--amorfa-creme);
+    color:var(--amorfa-branco);
     font-family:var(--display);
     line-height:.85;
     pointer-events:none;
@@ -2174,7 +2175,7 @@ body.idv-abrindo{ overflow:hidden; }
 body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 
 /* faixa do desafio: creme sobre marrom, invertida */
-.tema-amorfa .desafio .capitulo-num{ color:var(--amorfa-marrom); opacity:.75; }
+.tema-amorfa .desafio .capitulo-num{ color:var(--amorfa-preto); opacity:.75; }
 
 /* três pilares */
 .pilares{
@@ -2188,8 +2189,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 .pilar{
     padding:32px 28px;
     border-radius:26px;
-    background:var(--amorfa-creme);
-    color:var(--amorfa-marrom);
+    background:var(--amorfa-branco);
+    color:var(--amorfa-preto);
 }
 .pilar h3{ font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); line-height:1; margin-bottom:16px; }
 .pilar p{ font-size:1.02rem; line-height:1.55; }
@@ -2202,56 +2203,6 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 }
 .moodboard-imagem.galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:1088 / 806; border-radius:26px; }
 .moodboard figcaption{ margin-top:14px; font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
-
-/* como as memórias permanecem */
-.marcas-memoria{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:18px;
-    max-width:var(--wrap);
-    margin:0 auto 80px;
-    padding:0 var(--pad);
-}
-.marcas-memoria div{
-    display:grid;
-    gap:4px;
-    padding:22px 24px;
-    border-radius:22px;
-    background:var(--amorfa-creme);
-    color:var(--amorfa-marrom);
-}
-.marcas-memoria b{ font-family:var(--display); font-size:1.5rem; font-weight:800; letter-spacing:-.03em; }
-
-/* Sankofa: citação + memória cognitiva e afetiva */
-.sankofa{
-    max-width:var(--wrap);
-    margin:0 auto 120px;
-    padding:0 var(--pad);
-}
-.sankofa blockquote p{
-    max-width:24ch;
-    font-family:var(--display);
-    font-size:clamp(1.8rem, 1rem + 3vw, 3.4rem);
-    font-weight:800;
-    line-height:1.05;
-    letter-spacing:-.035em;
-}
-.sankofa blockquote p::before{ content:"“"; }
-.sankofa blockquote p::after{ content:"”"; }
-.sankofa cite{ display:block; margin-top:14px; font-style:normal; color:var(--graphite); }
-.sankofa-cartoes{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:40px;
-}
-.sankofa-cartoes article{
-    padding:28px;
-    border-radius:26px;
-    box-shadow:inset 0 0 0 1.5px var(--line);
-}
-.sankofa-cartoes span{ font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
-.sankofa-cartoes h3{ margin:6px 0 10px; font-size:1.8rem; }
 
 /* renders da instalação */
 .renders{
@@ -2284,8 +2235,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     gap:8px;
     padding:24px;
     border-radius:22px;
-    background:var(--amorfa-creme);
-    color:var(--amorfa-marrom);
+    background:var(--amorfa-branco);
+    color:var(--amorfa-preto);
 }
 .jornada li span{ font-family:var(--display); font-size:2.6rem; font-weight:800; line-height:1; letter-spacing:-.04em; opacity:.35; }
 .jornada li b{ font-family:var(--display); font-size:1.35rem; font-weight:800; letter-spacing:-.03em; }
@@ -2313,7 +2264,7 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     margin-bottom:120px;
     overflow:hidden;
     text-align:center;
-    color:var(--amorfa-creme);
+    color:var(--amorfa-branco);
 }
 .fecho-amorfa img{
     position:absolute;
@@ -2321,7 +2272,7 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     width:100%; height:100%;
     object-fit:cover;
     object-position:50% 35%;
-    filter:brightness(.45) saturate(.8);
+    filter:grayscale(1) brightness(.4);
 }
 .fecho-amorfa div{ position:relative; padding:0 var(--pad); }
 .fecho-amorfa p{ font-size:clamp(1.1rem, .9rem + .8vw, 1.6rem); margin-bottom:10px; }
@@ -2335,26 +2286,67 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     text-wrap:balance;
 }
 
-/* referências */
-.referencias{
+/* tudo em preto, branco e cinza: as imagens também perdem a cor */
+.tema-amorfa main img{ filter:grayscale(1); }
+.tema-amorfa .proj-tag{ background:var(--amorfa-branco); }
+.tema-amorfa .desafio{ background:var(--amorfa-branco); color:var(--amorfa-preto); }
+
+/* papel do Luís na abertura */
+.projeto-papel{
+    margin-top:18px;
+    max-width:52ch;
+    padding-left:16px;
+    border-left:2px solid var(--cor-projeto);
+    font-size:1.05rem;
+    font-weight:600;
+}
+
+/* créditos da equipe */
+.equipe{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:24px 48px;
+    grid-template-columns:1.2fr 1fr;
+    gap:18px;
     max-width:var(--wrap);
-    margin:0 auto 100px;
+    margin:0 auto 120px;
     padding:0 var(--pad);
 }
-.referencias h2{ grid-column:1 / -1; font-size:clamp(2rem, 1.3rem + 3vw, 3.4rem); }
-.referencias h3{ font-size:1.2rem; margin-bottom:12px; }
-.referencias ul{ list-style:none; display:grid; gap:10px; color:var(--graphite); }
+.equipe-destaque{
+    display:grid;
+    align-content:end;
+    gap:10px;
+    min-height:220px;
+    padding:28px;
+    border-radius:26px;
+    background:var(--amorfa-branco);
+    color:var(--amorfa-preto);
+}
+.equipe-destaque b{ font-family:var(--display); font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); font-weight:800; letter-spacing:-.04em; line-height:1; }
+.equipe-destaque span{ font-size:1rem; line-height:1.45; }
+.equipe ul{
+    list-style:none;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+.equipe li{
+    display:flex;
+    align-items:flex-end;
+    padding:22px;
+    border-radius:22px;
+    box-shadow:inset 0 0 0 1.5px var(--line);
+    font-family:var(--display);
+    font-size:1.2rem;
+    font-weight:700;
+    letter-spacing:-.02em;
+}
 
 @media (max-width:900px){
-    .pilares, .marcas-memoria, .sankofa-cartoes, .referencias{ grid-template-columns:1fr; }
+    .pilares, .equipe{ grid-template-columns:1fr; }
     .jornada ol{ grid-template-columns:1fr 1fr; }
     .entidade{ grid-template-columns:1fr 1fr; }
     .entidade .entidade-principal{ grid-column:1 / -1; aspect-ratio:16 / 9; }
     .renders{ grid-template-columns:1fr; }
-    .moodboard, .sankofa, .jornada, .entidade{ margin-bottom:80px; }
+    .moodboard, .jornada, .entidade, .equipe{ margin-bottom:80px; }
     .fecho-amorfa{ min-height:70vh; margin-bottom:80px; }
 }
 @media (max-width:560px){
