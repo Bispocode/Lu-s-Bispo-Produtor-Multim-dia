@@ -1030,6 +1030,48 @@ background: var(--red);
 .janela-barra span{ margin:0 auto; padding-right:48px; font-size:.75rem; font-weight:600; color:var(--graphite); }
 .ferramenta-video video{ display:block; width:100%; aspect-ratio:1424 / 884; height:auto; background:#f2f4f8; }
 
+/* Ferramenta ainda em desenvolvimento */
+.ferramenta-embreve{
+    position:relative;
+    display:grid;
+    place-items:center;
+    aspect-ratio:16 / 10;
+    border-radius:26px;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 80% 15%, rgba(255,255,255,.18), transparent 45%),
+        linear-gradient(135deg, var(--cor-projeto), var(--red-deep));
+}
+.embreve-selo{
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+}
+.embreve-selo-texto{
+    display:inline-block;
+    margin-bottom:12px;
+    background:var(--pink);
+    color:var(--cor-projeto);
+}
+/* mini calendário ilustrativo, com alguns dias marcados */
+.embreve-cal{
+    width:min(60%, 320px);
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(6px);
+    color:#fff;
+}
+.embreve-cal b{ display:block; margin-bottom:12px; font-size:1.1rem; }
+.embreve-cal div{ display:grid; grid-template-columns:repeat(7, 1fr); gap:6px; }
+.embreve-cal i{ aspect-ratio:1; border-radius:6px; background:rgba(255,255,255,.16); }
+.embreve-cal i:nth-child(3), .embreve-cal i:nth-child(9),
+.embreve-cal i:nth-child(12), .embreve-cal i:nth-child(17){ background:#fff; }
+.embreve-cal i:nth-child(5), .embreve-cal i:nth-child(15){ background:var(--sieg-ciano, var(--pink)); }
+
 /* Depoimento: fecha a história */
 .depoimento{
     max-width:var(--wrap);
