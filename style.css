@@ -10,8 +10,8 @@
     --graphite: #6B6560;
     --line: rgba(23,19,15,.12);
 
-    --display: "Bricolage Grotesque", sans-serif;
-    --body: "Instrument Sans", sans-serif;
+    --display: "Red Hat Display", sans-serif;
+    --body: "Red Hat Display", sans-serif;
 
     --wrap: 1240px;
     --pad: 6vw;
@@ -1570,7 +1570,7 @@ background: var(--red);
     border-radius:11% / 5.2%;
     background:#fff;
     color:#000;
-    font-family:-apple-system, BlinkMacSystemFont, "Instrument Sans", sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, "Red Hat Display", sans-serif;
     font-size:12px;
     line-height:1.35;
 }

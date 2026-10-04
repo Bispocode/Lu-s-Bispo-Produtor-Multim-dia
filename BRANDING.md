@@ -15,7 +15,7 @@ entra, porque o logo já é a assinatura dele.
 ## Transição de IDV
 
 - **Ida (index → projeto):** começa com a identidade do portfólio ("Quem eu sou": logo Bispo.,
-  paleta vermelha, Bricolage Grotesque) e uma onda repinta a tela com a identidade do cliente
+  paleta vermelha, Red Hat Display) e uma onda repinta a tela com a identidade do cliente
   ("Onde eu gero impacto": nome com ponto, paleta e fonte do cliente).
 - **Volta (projeto → index):** o mesmo movimento ao contrário, do cliente para o portfólio.
 
@@ -31,5 +31,4 @@ movimento" ativado no sistema, ela não toca.
 | Vermelho | `#D7263D` |
 | Vermelho profundo | `#7A0D1D` |
 | Rosa | `#F5DEE0` |
-| Títulos | Bricolage Grotesque |
-| Texto corrido | Instrument Sans |
+| Tipografia | Red Hat Display (Google Fonts), em títulos e texto corrido |
