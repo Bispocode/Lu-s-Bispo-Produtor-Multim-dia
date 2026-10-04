@@ -305,6 +305,13 @@ a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
 .proj-com-capa:hover::before,
 .proj-com-capa:focus-visible::before{ transform:scale(1.05); }
 .proj-com-capa .proj-tag{ opacity:.85; }
+/* capa do Memória Amorfa: rosto mais acima e degradê no marrom do projeto */
+.proj-capa-amorfa::before{
+    background:
+        linear-gradient(to top, rgba(42,21,13,.9), rgba(42,21,13,0) 60%),
+        var(--capa) 50% 28% / cover no-repeat;
+}
+.proj-capa-amorfa{ color:#FBDFA2; }
 .proj-b{ grid-column:span 3; grid-row:span 2; }
 .proj-c{ grid-column:span 2; grid-row:span 2; }
 .proj-d{ grid-column:span 2; grid-row:span 2; }
@@ -2068,7 +2075,9 @@ body.idv-abrindo{ overflow:hidden; }
 .idv-marca{ display:grid; justify-items:center; gap:10px; }
 .idv-marca img{ width:min(420px, 70vw); }
 .idv-marca b{
-    font-size:clamp(4rem, 2rem + 9vw, 9rem);
+    max-width:90vw;
+    text-wrap:balance;
+    font-size:clamp(3rem, 1.5rem + 8vw, 9rem);
     font-weight:800;
     line-height:.9;
     letter-spacing:-.03em;
@@ -2112,4 +2121,242 @@ body.idv-abrindo{ overflow:hidden; }
 @media (max-width:560px){
     .idv-paleta i{ width:26px; height:26px; }
     .idv-amostra{ font-size:1.3rem; }
+}
+
+/* =========================================================
+   TEMA MEMÓRIA AMORFA — identidade da instalação
+   Marrom #442216 · Creme #FBDFA2 · Manrope
+========================================================= */
+.tema-amorfa{
+    --amorfa-marrom:#442216;
+    --amorfa-creme:#FBDFA2;
+    --amorfa-escuro:#2A150D;
+
+    --bg:var(--amorfa-marrom);
+    --ink:var(--amorfa-creme);
+    --red:var(--amorfa-creme);
+    --red-deep:var(--amorfa-creme);
+    --pink:#5A3123;                 /* marrom mais claro: molduras e fundos de imagem */
+    --graphite:rgba(251,223,162,.72);
+    --line:rgba(251,223,162,.2);
+    --cor-projeto:var(--amorfa-creme);
+
+    --display:"Manrope", sans-serif;
+    --body:"Manrope", sans-serif;
+}
+.tema-amorfa h1,
+.tema-amorfa h2,
+.tema-amorfa h3{ font-weight:800; letter-spacing:-.04em; }
+.tema-amorfa .site-header{ background:rgba(68,34,22,.9); }
+.tema-amorfa .site-footer{ background:var(--amorfa-escuro); }
+.tema-amorfa ::selection{ background:var(--amorfa-creme); color:var(--amorfa-marrom); }
+.tema-amorfa .projeto-hero .proj-tag{ color:var(--amorfa-marrom); }
+.tema-amorfa .projeto-seguinte{ color:var(--amorfa-marrom); }
+.projeto-equipe{ margin-top:14px; max-width:60ch; font-size:.95rem; color:var(--graphite); }
+
+/* capa com o título do memorial por cima do rosto */
+.capa-amorfa .projeto-capa-moldura::after{ background:linear-gradient(transparent 40%, rgba(42,21,13,.75)); height:100%; }
+.capa-amorfa .projeto-capa-moldura img{ object-position:50% 30%; filter:saturate(.85); }
+.capa-titulo{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    display:grid;
+    place-content:center;
+    justify-items:center;
+    color:var(--amorfa-creme);
+    font-family:var(--display);
+    line-height:.85;
+    pointer-events:none;
+}
+.capa-titulo span{ font-size:clamp(2rem, 1rem + 4vw, 5rem); font-weight:400; letter-spacing:-.03em; }
+.capa-titulo b{ font-size:clamp(4.5rem, 1rem + 15vw, 16rem); font-weight:800; letter-spacing:-.06em; }
+body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
+
+/* faixa do desafio: creme sobre marrom, invertida */
+.tema-amorfa .desafio .capitulo-num{ color:var(--amorfa-marrom); opacity:.75; }
+
+/* três pilares */
+.pilares{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+    max-width:var(--wrap);
+    margin:0 auto 64px;
+    padding:0 var(--pad);
+}
+.pilar{
+    padding:32px 28px;
+    border-radius:26px;
+    background:var(--amorfa-creme);
+    color:var(--amorfa-marrom);
+}
+.pilar h3{ font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); line-height:1; margin-bottom:16px; }
+.pilar p{ font-size:1.02rem; line-height:1.55; }
+
+/* moodboard */
+.moodboard{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.moodboard-imagem.galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:1088 / 806; border-radius:26px; }
+.moodboard figcaption{ margin-top:14px; font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
+
+/* como as memórias permanecem */
+.marcas-memoria{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+    max-width:var(--wrap);
+    margin:0 auto 80px;
+    padding:0 var(--pad);
+}
+.marcas-memoria div{
+    display:grid;
+    gap:4px;
+    padding:22px 24px;
+    border-radius:22px;
+    background:var(--amorfa-creme);
+    color:var(--amorfa-marrom);
+}
+.marcas-memoria b{ font-family:var(--display); font-size:1.5rem; font-weight:800; letter-spacing:-.03em; }
+
+/* Sankofa: citação + memória cognitiva e afetiva */
+.sankofa{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.sankofa blockquote p{
+    max-width:24ch;
+    font-family:var(--display);
+    font-size:clamp(1.8rem, 1rem + 3vw, 3.4rem);
+    font-weight:800;
+    line-height:1.05;
+    letter-spacing:-.035em;
+}
+.sankofa blockquote p::before{ content:"“"; }
+.sankofa blockquote p::after{ content:"”"; }
+.sankofa cite{ display:block; margin-top:14px; font-style:normal; color:var(--graphite); }
+.sankofa-cartoes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:40px;
+}
+.sankofa-cartoes article{
+    padding:28px;
+    border-radius:26px;
+    box-shadow:inset 0 0 0 1.5px var(--line);
+}
+.sankofa-cartoes span{ font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--graphite); }
+.sankofa-cartoes h3{ margin:6px 0 10px; font-size:1.8rem; }
+
+/* renders da instalação */
+.renders{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    max-width:var(--wrap);
+    margin:0 auto 80px;
+    padding:0 var(--pad);
+}
+.renders .galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:16 / 9; border-radius:22px; }
+.renders .render-largo{ grid-column:1 / -1; }
+
+/* jornada do visitante */
+.jornada{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.jornada-titulo{ font-size:1.6rem; margin-bottom:20px; }
+.jornada ol{
+    list-style:none;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+}
+.jornada li{
+    display:grid;
+    align-content:start;
+    gap:8px;
+    padding:24px;
+    border-radius:22px;
+    background:var(--amorfa-creme);
+    color:var(--amorfa-marrom);
+}
+.jornada li span{ font-family:var(--display); font-size:2.6rem; font-weight:800; line-height:1; letter-spacing:-.04em; opacity:.35; }
+.jornada li b{ font-family:var(--display); font-size:1.35rem; font-weight:800; letter-spacing:-.03em; }
+.jornada li p{ font-size:.95rem; line-height:1.5; }
+
+/* a entidade: render grande + duas fotos de processo */
+.entidade{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:18px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.entidade .galeria-item{ grid-column:auto; grid-row:auto; border-radius:22px; aspect-ratio:9 / 16; }
+.entidade .entidade-principal{ aspect-ratio:auto; background:#000; }
+.entidade .entidade-principal img{ object-fit:cover; object-position:50% 40%; }
+
+/* fecho: a frase final sobre o rosto */
+.fecho-amorfa{
+    position:relative;
+    display:grid;
+    place-items:center;
+    min-height:90vh;
+    margin-bottom:120px;
+    overflow:hidden;
+    text-align:center;
+    color:var(--amorfa-creme);
+}
+.fecho-amorfa img{
+    position:absolute;
+    inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:50% 35%;
+    filter:brightness(.45) saturate(.8);
+}
+.fecho-amorfa div{ position:relative; padding:0 var(--pad); }
+.fecho-amorfa p{ font-size:clamp(1.1rem, .9rem + .8vw, 1.6rem); margin-bottom:10px; }
+.fecho-amorfa strong{
+    display:block;
+    font-family:var(--display);
+    font-size:clamp(2.6rem, 1rem + 6vw, 6.4rem);
+    font-weight:800;
+    line-height:.95;
+    letter-spacing:-.05em;
+    text-wrap:balance;
+}
+
+/* referências */
+.referencias{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px 48px;
+    max-width:var(--wrap);
+    margin:0 auto 100px;
+    padding:0 var(--pad);
+}
+.referencias h2{ grid-column:1 / -1; font-size:clamp(2rem, 1.3rem + 3vw, 3.4rem); }
+.referencias h3{ font-size:1.2rem; margin-bottom:12px; }
+.referencias ul{ list-style:none; display:grid; gap:10px; color:var(--graphite); }
+
+@media (max-width:900px){
+    .pilares, .marcas-memoria, .sankofa-cartoes, .referencias{ grid-template-columns:1fr; }
+    .jornada ol{ grid-template-columns:1fr 1fr; }
+    .entidade{ grid-template-columns:1fr 1fr; }
+    .entidade .entidade-principal{ grid-column:1 / -1; aspect-ratio:16 / 9; }
+    .renders{ grid-template-columns:1fr; }
+    .moodboard, .sankofa, .jornada, .entidade{ margin-bottom:80px; }
+    .fecho-amorfa{ min-height:70vh; margin-bottom:80px; }
+}
+@media (max-width:560px){
+    .jornada ol{ grid-template-columns:1fr; }
 }
