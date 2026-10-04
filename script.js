@@ -291,3 +291,11 @@ document.querySelectorAll("video[data-tocar-visivel]").forEach(video => {
         medir();
     }
 }
+
+// ===== Cartões que viram (frente e verso) =====
+document.querySelectorAll(".postal-virar").forEach(botao => {
+    botao.addEventListener("click", () => {
+        const virado = botao.getAttribute("aria-pressed") === "true";
+        botao.setAttribute("aria-pressed", String(!virado));
+    });
+});

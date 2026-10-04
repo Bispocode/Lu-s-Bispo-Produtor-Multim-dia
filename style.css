@@ -2679,3 +2679,210 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     cursor:pointer;
 }
 .jogo-controles button:hover{ background:rgba(0,0,0,.85); }
+
+/* =========================================================
+   TEMA CARTÕES POSTAIS MUSICAIS
+   Branco #FFFFFF · Marinho #0C1B2D · Vermelho #D0372A
+   Amarelo #FCBD2C · Azul #009CBE · Archivo Black / Archivo
+========================================================= */
+.tema-cp{
+    --cp-marinho:#0C1B2D;
+    --cp-vermelho:#D0372A;
+    --cp-amarelo:#FCBD2C;
+    --cp-azul:#009CBE;
+    --cp-papel:#F3EFE6;
+
+    --bg:var(--cp-papel);
+    --ink:var(--cp-marinho);
+    --red:var(--cp-vermelho);
+    --red-deep:var(--cp-vermelho);
+    --pink:#E6E0D2;
+    --graphite:#4A5260;
+    --line:rgba(12,27,45,.14);
+    --cor-projeto:var(--cp-vermelho);
+
+    --display:"Archivo Black", sans-serif;
+    --body:"Archivo", sans-serif;
+}
+.tema-cp h1, .tema-cp h2, .tema-cp h3{ font-weight:400; letter-spacing:-.02em; text-transform:uppercase; }
+.tema-cp .site-header{ background:rgba(243,239,230,.92); }
+.tema-cp .site-footer{ background:var(--cp-marinho); }
+.tema-cp ::selection{ background:var(--cp-amarelo); color:var(--cp-marinho); }
+.tema-cp .desafio{ background:var(--cp-marinho); color:#fff; }
+.tema-cp .desafio .capitulo-num{ color:var(--cp-amarelo); }
+.tema-cp .projeto-seguinte{ background:var(--cp-azul); color:#fff; }
+.tema-cp .pilar:nth-child(1){ --cartao-fundo:var(--cp-vermelho); --cartao-texto:#fff; }
+.tema-cp .pilar:nth-child(2){ --cartao-fundo:var(--cp-amarelo); --cartao-texto:var(--cp-marinho); }
+.tema-cp .pilar:nth-child(3){ --cartao-fundo:var(--cp-azul); --cartao-texto:#fff; }
+:where(.tema-cp) img{ height:auto; }
+
+/* capa: cartões espalhados numa mesa */
+.capa-cp{
+    position:relative;
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+    padding:110px var(--pad) 70px;
+    overflow:hidden;
+    background:var(--cp-marinho);
+}
+.capa-cp-mesa{ position:absolute; inset:0; }
+.capa-cp-mesa img{
+    position:absolute;
+    left:50%; top:52%;
+    width:min(46vw, 620px);
+    border:10px solid #fff;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
+    transform:translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--r));
+    animation:cp-cair .9s cubic-bezier(.22,1,.36,1) both;
+}
+.capa-cp-mesa img:nth-child(2){ animation-delay:.1s; }
+.capa-cp-mesa img:nth-child(3){ animation-delay:.2s; }
+.capa-cp-mesa img:nth-child(4){ animation-delay:.3s; }
+.capa-cp-mesa img:nth-child(5){ animation-delay:.45s; }
+@keyframes cp-cair{ from{ opacity:0; translate:0 -60px; rotate:8deg; } }
+.capa-cp-titulo{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    color:#fff;
+    pointer-events:none;
+    transform:rotate(-4deg);
+}
+.capa-cp-titulo p{
+    display:inline-block;
+    margin-bottom:10px;
+    padding:6px 14px;
+    background:var(--cp-amarelo);
+    color:var(--cp-marinho);
+    font:700 clamp(.9rem, .8rem + .4vw, 1.2rem) var(--body);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+}
+.capa-cp-titulo h2{
+    font-size:clamp(3.4rem, 1rem + 10vw, 10rem);
+    line-height:.85;
+    color:#fff;
+    -webkit-text-stroke:3px var(--cp-marinho);
+    paint-order:stroke fill;
+    text-shadow:8px 8px 0 var(--cp-vermelho);
+}
+.capa-cp .capa-seta{ border-color:rgba(255,255,255,.7); }
+
+/* mesa com os 10 cartões que viram */
+.mesa-postais{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.mesa-dica{ margin-bottom:22px; font-weight:700; color:var(--graphite); }
+.mesa-postais ol{
+    list-style:none;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:44px 36px;
+}
+.postal{ rotate:var(--giro, 0deg); transition:rotate .4s ease; }
+.postal:hover{ rotate:0deg; }
+.postal-virar{
+    position:relative;
+    display:block;
+    width:100%;
+    aspect-ratio:3 / 2;
+    padding:0;
+    border:0;
+    background:none;
+    cursor:pointer;
+    perspective:1600px;
+}
+.postal-frente, .postal-verso{
+    position:absolute;
+    inset:0;
+    border:8px solid #fff;
+    backface-visibility:hidden;
+    box-shadow:0 18px 40px -18px rgba(12,27,45,.55);
+    transition:transform .8s cubic-bezier(.3,1.3,.5,1);
+}
+.postal-verso{ transform:rotateY(180deg); }
+.postal-frente img, .postal-verso img{ width:100%; height:100%; object-fit:cover; }
+.postal-virar[aria-pressed="true"] .postal-frente{ transform:rotateY(-180deg); }
+.postal-virar[aria-pressed="true"] .postal-verso{ transform:rotateY(0deg); }
+.postal-legenda{ margin-top:14px; font-weight:600; }
+.postal-legenda b{ margin-right:8px; font-family:var(--display); font-weight:400; color:var(--cp-vermelho); }
+
+/* direção visual */
+.cp-direcao{
+    display:grid;
+    grid-template-columns:3fr 1fr;
+    gap:24px;
+    max-width:var(--wrap);
+    margin:0 auto 40px;
+    padding:0 var(--pad);
+}
+.cp-moodboard.galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:1600 / 1132; border-radius:6px; }
+.cp-paleta{ display:grid; gap:10px; }
+.cp-paleta span{
+    display:flex;
+    align-items:flex-end;
+    padding:12px;
+    border-radius:6px;
+    background:var(--c);
+    box-shadow:inset 0 0 0 1.5px var(--line);
+    color:#fff;
+    font-weight:700;
+    font-size:.85rem;
+}
+.cp-paleta span.claro{ color:var(--cp-marinho); }
+.cp-tecnicas{ margin-bottom:120px; }
+
+/* versos */
+.cp-versos{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.cp-versos img{ width:100%; border:8px solid #fff; rotate:var(--r); box-shadow:0 18px 40px -18px rgba(12,27,45,.5); }
+
+/* fecho */
+.fecho-cp{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+    text-align:center;
+}
+.fecho-cp strong{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(2.4rem, 1rem + 5vw, 5.6rem);
+    line-height:.95;
+    text-transform:uppercase;
+    color:var(--cp-marinho);
+    text-shadow:6px 6px 0 var(--cp-amarelo);
+}
+
+/* card no index */
+.proj.proj-capa-cp{ background:#0C1B2D; color:#fff; }
+.proj-capa-cp::before{
+    background:
+        linear-gradient(to top, rgba(12,27,45,.88), rgba(12,27,45,0) 55%),
+        var(--capa) 50% 40% / cover no-repeat;
+}
+
+@media (max-width:900px){
+    .capa-cp-mesa img{ width:70vw; border-width:6px; }
+    .capa-cp{ min-height:min(100vh, 620px); }
+    .capa-cp-mesa img{ top:55%; }
+    .mesa-postais ol{ grid-template-columns:1fr; gap:32px; }
+    .cp-direcao{ grid-template-columns:1fr; }
+    .cp-paleta{ grid-template-columns:repeat(5, 1fr); }
+    .cp-paleta span{ aspect-ratio:1; font-size:0; }
+    .cp-versos{ grid-template-columns:1fr; }
+    .mesa-postais, .cp-versos, .fecho-cp, .cp-tecnicas{ margin-bottom:80px; }
+}
+@media (prefers-reduced-motion: reduce){
+    .capa-cp-mesa img{ animation:none; }
+    .postal-frente, .postal-verso{ transition:none; }
+}
