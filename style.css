@@ -38,7 +38,12 @@ h1,h2,h3{
     font-family:var(--display);
     font-weight:700;
     letter-spacing:-.01em;
+    text-wrap:balance;
 }
+
+/* quebras de texto: títulos com linhas equilibradas, parágrafos sem palavra sozinha no fim */
+p, dd, li, figcaption, blockquote{ text-wrap:pretty; }
+.projeto-lead, .desafio-frase, .projeto-destaque p, .vitrine-titulo, .sobre-p-grande{ text-wrap:balance; }
 
 a:focus-visible,
 button:focus-visible,
@@ -922,7 +927,9 @@ background: var(--red);
 }
 .capitulo > p{ max-width:52ch; font-size:1.15rem; color:var(--graphite); }
 .capitulo > p + p{ margin-top:12px; }
-.capitulo h2{ max-width:16ch; margin-bottom:20px; }
+.capitulo h2{ max-width:19ch; margin-bottom:20px; }
+/* mantém palavras juntas na mesma linha (ex.: "Soluções Fiscais") */
+.junto{ display:inline-block; }
 
 /* Desafio: faixa de cor com a frase que abre a história */
 .desafio{
@@ -1983,6 +1990,7 @@ body.idv-abrindo{ overflow:hidden; }
     line-height:.9;
     letter-spacing:-.03em;
 }
+.idv-ponto{ color:var(--idv-destaque); }
 .idv-marca small{ font-size:clamp(1rem, .9rem + .5vw, 1.35rem); font-weight:500; opacity:.8; }
 
 .idv-paleta{ display:flex; align-items:center; gap:10px; }

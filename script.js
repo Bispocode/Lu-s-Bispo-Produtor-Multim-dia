@@ -103,7 +103,15 @@ document.querySelectorAll("a.proj, a[data-transicao]").forEach(link => {
         event.preventDefault();
 
         const r = link.getBoundingClientRect();
-        const cor = corDaTransicao(link);
+        let cor = corDaTransicao(link);
+
+        // saindo de um projeto com troca de IDV para o index: a volta toca ao contrário
+        // (cliente → portfólio), então a cortina já sai na cor de fundo do cliente
+        const paraIndex = /(^|\/)(index\.html)?$/.test(destino.pathname);
+        if (paraIndex && typeof TrocaIDV !== "undefined") {
+            const corCliente = TrocaIDV.prepararVolta();
+            if (corCliente) cor = corCliente;
+        }
 
         const cortina = document.createElement("div");
         cortina.className = "cortina cortina-saida";
