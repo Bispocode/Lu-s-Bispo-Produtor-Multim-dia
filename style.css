@@ -2344,7 +2344,10 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     .pilares, .equipe{ grid-template-columns:1fr; }
     .jornada ol{ grid-template-columns:1fr 1fr; }
     .entidade{ grid-template-columns:1fr 1fr; }
-    .entidade .entidade-principal{ grid-column:1 / -1; aspect-ratio:16 / 9; }
+    .entidade .entidade-principal{ grid-column:1 / -1; aspect-ratio:4 / 5; }
+    /* celular: a moldura dos modelos 3D tem a altura do próprio canvas (nada fica cortado) */
+    .renders .render-largo:has(.visualizador3d){ aspect-ratio:1 / 1; }
+    .visualizador3d{ min-height:0; }
     .renders{ grid-template-columns:1fr; }
     .moodboard, .jornada, .entidade, .equipe{ margin-bottom:80px; }
     .fecho-amorfa{ min-height:70vh; margin-bottom:80px; }
