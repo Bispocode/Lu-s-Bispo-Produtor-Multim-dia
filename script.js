@@ -299,3 +299,86 @@ document.querySelectorAll(".postal-virar").forEach(botao => {
         botao.setAttribute("aria-pressed", String(!virado));
     });
 });
+
+// ===== Cursor personalizado =====
+// Ponto que segue o mouse na hora e um anel que vem logo atrás, na cor da IDV da página
+// (--cursor-cor no CSS). Só no computador: em tela de toque não existe cursor.
+// Sobre um link o anel cresce; em cards e modelos 3D ele mostra um rótulo
+// (qualquer elemento pode pedir o seu com data-cursor="Texto").
+// Em campos de texto, iframes e no jogo, o cursor normal do sistema volta.
+(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const raiz = document.documentElement;
+
+    const NATIVO = "input, textarea, select, iframe, .jogo-canvas, [contenteditable]";
+    const CLICAVEL = "a, button, [role='button'], label, summary, [tabindex]:not([tabindex='-1'])";
+    const ROTULOS = [
+        ["[data-cursor]", el => el.dataset.cursor],
+        ["a.proj", () => "Ver projeto"],
+        ["article.proj", () => "Em breve"],
+        [".visualizador3d", () => "Arraste"],
+        [".projeto-seguinte", () => "Próximo"]
+    ];
+    // fundos pintados com a própria cor da IDV: ali o cursor troca para a cor do fundo da página
+    const INVERTIDO = ".projeto-seguinte, [data-cursor-invertido]";
+
+    const ponto = document.createElement("div");
+    ponto.className = "cursor-ponto";
+    const anel = document.createElement("div");
+    anel.className = "cursor-anel";
+    anel.innerHTML = "<b></b>";
+    const rotulo = anel.firstChild;
+    ponto.setAttribute("aria-hidden", "true");
+    anel.setAttribute("aria-hidden", "true");
+    document.body.append(ponto, anel);
+    raiz.classList.add("cursor-ativo");
+
+    let x = -100, y = -100, ax = x, ay = y, animando = false;
+
+    function quadro() {
+        ax += (x - ax) * 0.2;
+        ay += (y - ay) * 0.2;
+        if (Math.abs(x - ax) < 0.1 && Math.abs(y - ay) < 0.1) { ax = x; ay = y; }
+        anel.style.transform = `translate3d(${ax}px, ${ay}px, 0)`;
+        animando = ax !== x || ay !== y;
+        if (animando) requestAnimationFrame(quadro);
+    }
+
+    window.addEventListener("pointermove", e => {
+        if (e.pointerType !== "mouse") return;
+        x = e.clientX;
+        y = e.clientY;
+        ponto.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        if (reduzir || !raiz.classList.contains("cursor-visivel")) {
+            ax = x; ay = y;
+            anel.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        } else if (!animando) {
+            animando = true;
+            requestAnimationFrame(quadro);
+        }
+        raiz.classList.add("cursor-visivel");
+    }, { passive: true });
+
+    document.addEventListener("pointerover", e => {
+        const alvo = e.target;
+        if (!(alvo instanceof Element)) return;
+        let texto = "";
+        for (const [seletor, ler] of ROTULOS) {
+            const el = alvo.closest(seletor);
+            if (el) { texto = ler(el); break; }
+        }
+        rotulo.textContent = texto;
+        raiz.classList.toggle("cursor-nativo", !!alvo.closest(NATIVO));
+        raiz.classList.toggle("cursor-invertido", !!alvo.closest(INVERTIDO));
+        raiz.classList.toggle("cursor-rotulo", !!texto);
+        raiz.classList.toggle("cursor-link", !texto && !!alvo.closest(CLICAVEL));
+    });
+
+    // saiu da janela (ou entrou num iframe): some até o mouse voltar
+    document.addEventListener("mouseout", e => {
+        if (!e.relatedTarget) raiz.classList.remove("cursor-visivel");
+    });
+    window.addEventListener("pointerdown", () => raiz.classList.add("cursor-pressionado"));
+    window.addEventListener("pointerup", () => raiz.classList.remove("cursor-pressionado"));
+})();
