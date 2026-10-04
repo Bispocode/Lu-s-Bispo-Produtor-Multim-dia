@@ -2578,3 +2578,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
         var(--capa) 50% 35% / 82% auto no-repeat,
         radial-gradient(circle at 50% 40%, #0B3CAB, #002C8F 70%);
 }
+
+/* imagens com width/height no HTML: a altura acompanha a largura do CSS (sem esticar).
+   :where mantém a especificidade baixa, para galerias com height:100% continuarem valendo */
+:where(.tema-bb) img{ height:auto; }
+.bb-personagem img, .bb-elenco img, .capa-bb-dupla, .fecho-bb img, .capa-bb-logo{ object-fit:contain; }
