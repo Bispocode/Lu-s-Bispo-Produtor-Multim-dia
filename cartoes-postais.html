@@ -23,10 +23,10 @@
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Archivo+Black&family=Archivo:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Fruktur:ital@0;1&family=Archivo+Black&family=Archivo:wght@400..700&display=swap" rel="stylesheet">
 </head>
 
-<!-- tema-cp: identidade dos cartões (papel, marinho, vermelho, amarelo e azul; Archivo) só nesta página -->
+<!-- tema-cp: identidade dos cartões (papel, marinho, vermelho, amarelo e azul; títulos em Fruktur, texto em Archivo) só nesta página -->
 <!-- data-idv-*: configuração da abertura com troca de IDV (ver troca-idv.js) -->
 <body class="pagina-projeto tema-cp" style="--cor-projeto:#D0372A"
       data-idv-marca="Postais Musicais"
@@ -35,7 +35,7 @@
       data-idv-texto="#FFFFFF"
       data-idv-destaque="#FCBD2C"
       data-idv-cores="#FFFFFF #0C1B2D #D0372A #FCBD2C #009CBE"
-      data-idv-fonte="Archivo Black">
+      data-idv-fonte="Fruktur">
 <script src="troca-idv.js"></script>
 
 <header class="site-header">
@@ -97,6 +97,14 @@
         <span class="capitulo-num">02 — A ideia</span>
         <h2>Não os versos: os momentos.</h2>
         <p>Em vez de dividir a letra, cada cartão mostra um lugar onde "High" costuma tocar: no fone dentro do ônibus, no skate, na barbearia, na roda com os amigos. A música vira trilha do dia a dia.</p>
+    </section>
+
+    <!-- player do Spotify: "High", SonoTWS (álbum Street Talk) -->
+    <section class="cp-player revelar" aria-label="Ouça a música">
+        <p>Dá o play e vira os cartões ouvindo a música.</p>
+        <iframe src="https://open.spotify.com/embed/track/7b4p3RAWfPGpdBpP1O0OXV?utm_source=generator&amp;theme=0"
+                title="High, de SonoTWS, no Spotify" width="100%" height="152" frameborder="0" loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </section>
 
     <section class="mesa-postais" aria-label="Os 10 cartões. Clique em um cartão para ver o verso.">
