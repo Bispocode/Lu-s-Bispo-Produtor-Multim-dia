@@ -155,7 +155,10 @@
 
     <section class="entidade">
         <figure class="galeria-item entidade-principal revelar">
-            <img src="assets/projetos/memoria-amorfa/mascara-render.webp" alt="Render 3D da máscara derretida da entidade." loading="lazy" width="1600" height="900">
+            <div class="visualizador3d" data-modelo3d="assets/projetos/memoria-amorfa/mascara.glb" data-cor="#d9d9d9">
+                <img src="assets/projetos/memoria-amorfa/mascara-render.webp" alt="Modelo 3D da máscara derretida da entidade, modelado por Luís Bispo." loading="lazy" width="1600" height="900">
+                <span class="visualizador3d-dica" aria-hidden="true">Arraste para girar</span>
+            </div>
         </figure>
         <figure class="galeria-item entidade-foto revelar">
             <img src="assets/projetos/memoria-amorfa/mascaras.webp" alt="Mão segurando duas máscaras de teste, uma branca e uma preta." loading="lazy" width="899" height="1599">
@@ -213,5 +216,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script type="module" src="visualizador3d.js"></script>
 </body>
 </html>
