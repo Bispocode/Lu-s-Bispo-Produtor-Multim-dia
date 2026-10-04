@@ -2189,8 +2189,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 .pilar{
     padding:32px 28px;
     border-radius:26px;
-    background:var(--amorfa-branco);
-    color:var(--amorfa-preto);
+    background:var(--cartao-fundo, var(--ink));
+    color:var(--cartao-texto, var(--bg));
 }
 .pilar h3{ font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); line-height:1; margin-bottom:16px; }
 .pilar p{ font-size:1.02rem; line-height:1.55; }
@@ -2235,8 +2235,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     gap:8px;
     padding:24px;
     border-radius:22px;
-    background:var(--amorfa-branco);
-    color:var(--amorfa-preto);
+    background:var(--cartao-fundo, var(--ink));
+    color:var(--cartao-texto, var(--bg));
 }
 .jornada li span{ font-family:var(--display); font-size:2.6rem; font-weight:800; line-height:1; letter-spacing:-.04em; opacity:.35; }
 .jornada li b{ font-family:var(--display); font-size:1.35rem; font-weight:800; letter-spacing:-.03em; }
@@ -2317,8 +2317,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     min-height:220px;
     padding:28px;
     border-radius:26px;
-    background:var(--amorfa-branco);
-    color:var(--amorfa-preto);
+    background:var(--cartao-fundo, var(--ink));
+    color:var(--cartao-texto, var(--bg));
 }
 .equipe-destaque b{ font-family:var(--display); font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); font-weight:800; letter-spacing:-.04em; line-height:1; }
 .equipe-destaque span{ font-size:1rem; line-height:1.45; }
@@ -2393,3 +2393,188 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 .visualizador3d.mexeu .visualizador3d-dica{ opacity:0; }
 /* na página em preto e branco, as cenas com materiais coloridos também perdem a cor */
 .tema-amorfa .visualizador3d canvas{ filter:grayscale(1); }
+
+/* =========================================================
+   TEMA BETWEEN BUBBLES — identidade do jogo
+   Azul-marinho #002C8F · Azul #41A5DD · Rosa #E074A2 · Roxo #6A1A54
+   Claro #E9F5FD · Readex Pro
+========================================================= */
+.tema-bb{
+    --bb-marinho:#002C8F;
+    --bb-azul:#41A5DD;
+    --bb-azul-medio:#3F95C5;
+    --bb-rosa:#E074A2;
+    --bb-roxo:#6A1A54;
+    --bb-claro:#E9F5FD;
+
+    --bg:var(--bb-marinho);
+    --ink:var(--bb-claro);
+    --red:var(--bb-rosa);
+    --red-deep:var(--bb-rosa);
+    --pink:#123E9E;                 /* azul um pouco mais claro: molduras e fundos de imagem */
+    --graphite:rgba(233,245,253,.7);
+    --line:rgba(233,245,253,.18);
+    --cor-projeto:var(--bb-azul);
+
+    --display:"Readex Pro", sans-serif;
+    --body:"Readex Pro", sans-serif;
+}
+.tema-bb h1, .tema-bb h2, .tema-bb h3{ font-weight:700; letter-spacing:-.03em; }
+.tema-bb .site-header{ background:rgba(0,44,143,.9); }
+.tema-bb .site-footer{ background:#001E66; }
+.tema-bb ::selection{ background:var(--bb-rosa); color:#fff; }
+.tema-bb .projeto-hero .proj-tag{ background:var(--bb-rosa); color:#fff; }
+.tema-bb .capitulo-num{ color:var(--bb-azul); }
+.tema-bb .desafio{ background:var(--bb-claro); color:var(--bb-marinho); }
+.tema-bb .desafio .capitulo-num{ color:var(--bb-rosa); }
+.tema-bb .projeto-seguinte{ background:var(--bb-azul); color:var(--bb-marinho); }
+.tema-bb .projeto-papel{ border-left-color:var(--bb-rosa); }
+
+/* capa: logo pixelado, a dupla e bolhas flutuando */
+.capa-bb{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:40px;
+    min-height:100vh;
+    padding:120px max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad))) 80px;
+    overflow:hidden;
+    background:radial-gradient(circle at 75% 45%, #0B3CAB, var(--bb-marinho) 60%);
+}
+.capa-bb-conteudo{ position:relative; z-index:1; }
+.capa-bb-logo{ width:min(520px, 100%); image-rendering:pixelated; }
+.capa-bb-slogan{
+    margin-top:18px;
+    font-size:clamp(1.1rem, .9rem + 1vw, 1.8rem);
+    font-weight:600;
+    color:var(--bb-claro);
+}
+.capa-bb-dupla{ position:relative; z-index:1; width:100%; max-width:620px; justify-self:center; animation:bb-flutuar 5s ease-in-out infinite; }
+@keyframes bb-flutuar{ 50%{ transform:translateY(-14px) rotate(-1.5deg); } }
+.bolha{
+    position:absolute;
+    width:var(--t, 60px);
+    aspect-ratio:1;
+    border-radius:22%;
+    background:rgba(65,165,221,.35);
+    box-shadow:inset -8px -8px 0 rgba(255,255,255,.08), inset 10px 10px 0 rgba(255,255,255,.18);
+    animation:bb-subir var(--d, 9s) linear infinite;
+    opacity:.8;
+}
+.bolha-1{ --t:70px; left:8%; bottom:-80px; --d:11s; }
+.bolha-2{ --t:44px; left:46%; bottom:-60px; --d:8s; animation-delay:-3s; }
+.bolha-3{ --t:90px; right:10%; bottom:-100px; --d:13s; animation-delay:-6s; background:rgba(224,116,162,.3); }
+.bolha-4{ --t:36px; right:38%; bottom:-50px; --d:9s; animation-delay:-1s; }
+@keyframes bb-subir{ to{ transform:translateY(calc(-100vh - 160px)) rotate(25deg); } }
+.capa-bb .capa-seta{ border-color:rgba(233,245,253,.6); }
+
+/* a ideia: personagens ao lado da tela inicial */
+.bb-ideia{
+    display:grid;
+    grid-template-columns:1fr 2.6fr 1fr;
+    align-items:end;
+    justify-items:center;
+    gap:24px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.bb-personagem img{ width:auto; max-width:100%; max-height:clamp(140px, 22vw, 300px); image-rendering:pixelated; }
+.bb-tela.galeria-item{ grid-column:auto; grid-row:auto; aspect-ratio:16 / 9; border-radius:22px; }
+
+/* identidade: paleta + elenco */
+.bb-identidade{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    align-items:center;
+    gap:40px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.bb-paleta{ display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; }
+.bb-paleta span{
+    display:flex;
+    align-items:flex-end;
+    aspect-ratio:3 / 4;
+    padding:10px;
+    border-radius:16px;
+    background:var(--c);
+    box-shadow:inset 0 0 0 1.5px rgba(233,245,253,.25);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.04em;
+}
+.bb-paleta span.claro{ color:var(--bb-marinho); }
+.bb-elenco{ display:flex; align-items:flex-end; justify-content:space-around; gap:20px; }
+.bb-elenco img{ width:auto; max-width:30%; max-height:clamp(110px, 18vw, 240px); image-rendering:pixelated; }
+.bb-paleta span{ min-width:0; overflow:hidden; }
+
+/* etapas do desenvolvimento */
+.bb-etapas{ grid-template-columns:1fr 1fr; }
+.bb-etapa-num{ display:block; margin-bottom:12px; font-size:2.4rem; font-weight:700; line-height:1; color:var(--bb-rosa); }
+
+/* as quatro fases, lado a lado como no memorial */
+.bb-fases{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:18px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.bb-fases img{
+    width:100%;
+    aspect-ratio:9 / 26;
+    object-fit:cover;
+    object-position:bottom;
+    border-radius:16px;
+    image-rendering:pixelated;
+}
+.bb-fases figcaption{ margin-top:10px; font-size:.8rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--graphite); }
+
+/* equipe: nomes com o papel de cada um */
+.equipe li small{ display:block; margin-top:6px; font-family:var(--body); font-size:.85rem; font-weight:400; letter-spacing:0; color:var(--graphite); }
+.equipe li{ flex-direction:column; align-items:flex-start; justify-content:flex-end; }
+.tema-bb .equipe ul{ grid-template-columns:1fr; }
+
+/* fecho */
+.fecho-bb{
+    display:grid;
+    justify-items:center;
+    gap:24px;
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:80px var(--pad);
+    text-align:center;
+}
+.fecho-bb img{ width:min(420px, 80%); animation:bb-flutuar 5s ease-in-out infinite; }
+.fecho-bb strong{ font-family:var(--display); font-size:clamp(2.4rem, 1rem + 5vw, 5.4rem); font-weight:700; line-height:1; letter-spacing:-.04em; }
+
+@media (max-width:900px){
+    .capa-bb{ grid-template-columns:1fr; text-align:center; justify-items:center; padding-top:110px; }
+    .capa-bb-dupla{ max-width:420px; }
+    .bb-ideia{ grid-template-columns:1fr 1fr; }
+    .bb-ideia .bb-tela{ grid-column:1 / -1; grid-row:1; }
+    .bb-ideia .bb-personagem{ max-width:150px; justify-self:center; }
+    .bb-identidade{ grid-template-columns:1fr; }
+    .bb-etapas{ grid-template-columns:1fr; }
+    .bb-fases{ grid-template-columns:1fr 1fr; }
+    .bb-paleta{ gap:6px; }
+    .bb-paleta span{ aspect-ratio:1 / 1.3; padding:6px; border-radius:12px; font-size:0; }
+    .bb-ideia, .bb-identidade, .bb-fases, .fecho-bb{ margin-bottom:80px; }
+}
+@media (prefers-reduced-motion: reduce){
+    .bolha, .capa-bb-dupla, .fecho-bb img{ animation:none; }
+}
+
+/* card do Between Bubbles no index: a dupla sobre o azul do jogo */
+.proj.proj-capa-bb{ background:#002C8F; color:#E9F5FD; }
+.proj-capa-bb::before{
+    background:
+        linear-gradient(to top, rgba(0,30,102,.9), rgba(0,30,102,0) 55%),
+        var(--capa) 50% 35% / 82% auto no-repeat,
+        radial-gradient(circle at 50% 40%, #0B3CAB, #002C8F 70%);
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Between Bubbles — Luís Bispo</title>
+<meta name="description" content="Between Bubbles: jogo cooperativo 2D em pixel art sobre as bolhas dos algoritmos. Estrutura e programação no Unity e em C# por Luís Bispo.">
+<meta name="theme-color" content="#002C8F">
+
+<link rel="canonical" href="https://lu-s-bispo-produtor-multim-dia.vercel.app/between-bubbles.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Luís Bispo">
+<meta property="og:url" content="https://lu-s-bispo-produtor-multim-dia.vercel.app/between-bubbles.html">
+<meta property="og:title" content="Between Bubbles — Luís Bispo">
+<meta property="og:description" content="Um jogo cooperativo sobre bolhas de algoritmo: um só não chega ao fim.">
+<meta property="og:image" content="https://lu-s-bispo-produtor-multim-dia.vercel.app/assets/projetos/between-bubbles/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Readex+Pro:wght@200..700&display=swap" rel="stylesheet">
+</head>
+
+<!-- tema-bb: identidade do Between Bubbles (azuis, rosa e roxo, Readex Pro) só nesta página -->
+<!-- data-idv-*: configuração da abertura com troca de IDV (ver troca-idv.js) -->
+<body class="pagina-projeto tema-bb" style="--cor-projeto:#41A5DD"
+      data-idv-marca="Between Bubbles"
+      data-idv-descricao="Um só não chega ao fim"
+      data-idv-fundo="#002C8F"
+      data-idv-texto="#E9F5FD"
+      data-idv-destaque="#E074A2"
+      data-idv-cores="#002C8F #41A5DD #E074A2 #6A1A54"
+      data-idv-fonte="Readex Pro">
+<script src="troca-idv.js"></script>
+
+<header class="site-header">
+    <a href="index.html#topo" class="mark" aria-label="Início" data-transicao>
+        <img src="Favicon.png" alt="">
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+    </button>
+    <nav id="nav-menu" class="nav">
+        <a href="index.html#projetos" data-transicao>Projetos</a>
+        <a href="index.html#trajetoria" data-transicao>Trajetória</a>
+        <a href="index.html#sobre" data-transicao>Sobre</a>
+        <a href="index.html#contato" class="nav-cta" data-transicao>Contato</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- ===================== CAPA ===================== -->
+    <section class="capa-bb" aria-label="Between Bubbles">
+        <span class="bolha bolha-1" aria-hidden="true"></span>
+        <span class="bolha bolha-2" aria-hidden="true"></span>
+        <span class="bolha bolha-3" aria-hidden="true"></span>
+        <span class="bolha bolha-4" aria-hidden="true"></span>
+        <div class="capa-bb-conteudo">
+            <img src="assets/projetos/between-bubbles/logo.webp" alt="Between Bubbles" class="capa-bb-logo" width="450" height="186">
+            <p class="capa-bb-slogan">Um só não chega ao fim</p>
+        </div>
+        <img src="assets/projetos/between-bubbles/dupla.webp" alt="Os dois personagens do jogo, um azul e um rosa, dentro de uma bolha." class="capa-bb-dupla" width="1055" height="514">
+        <a href="#bb-abertura" class="capa-seta" aria-label="Ir para o conteúdo"><span></span></a>
+    </section>
+
+    <!-- ===================== ABERTURA ===================== -->
+    <section class="projeto-hero" id="bb-abertura">
+        <a href="index.html#projetos" class="voltar" data-transicao>← Voltar aos projetos</a>
+
+        <div class="projeto-hero-topo">
+            <span class="proj-tag">Desenvolvimento de Jogos</span>
+            <span class="projeto-numero">03 <i>/ 04</i></span>
+        </div>
+
+        <h1>Between Bubbles</h1>
+        <p class="projeto-resumo">Um jogo cooperativo 2D em pixel art sobre as bolhas dos algoritmos: dois personagens, cada um preso na própria bolha, que só chegam ao fim juntos.</p>
+        <p class="projeto-papel">Fiquei com a estrutura e a programação do jogo: a montagem das fases no Unity e o código em C#.</p>
+    </section>
+
+    <!-- ===================== 01 · O DESAFIO ===================== -->
+    <section class="desafio revelar">
+        <span class="capitulo-num">01 — O desafio</span>
+        <p class="desafio-frase">Como falar de bolhas de filtro com quem vive dentro delas?</p>
+        <p class="desafio-linha">A pesquisa partiu das filter bubbles: os algoritmos de TikTok, Instagram e YouTube que mostram à Geração Z sempre mais do mesmo, reforçando crenças e encurtando o diálogo. Um texto explicaria o problema; um jogo faria a pessoa sentir.</p>
+    </section>
+
+    <!-- ===================== 02 · A IDEIA ===================== -->
+    <section class="capitulo revelar">
+        <span class="capitulo-num">02 — A ideia</span>
+        <h2>Um só não chega ao fim.</h2>
+        <p>Transformamos o tema em mecânica: cada jogador controla um personagem preso na sua bolha, e só cooperando, saindo da própria zona de conforto, a dupla avança. A referência foi o clássico de plataforma em dupla Fireboy &amp; Watergirl.</p>
+    </section>
+
+    <section class="bb-ideia revelar">
+        <figure class="bb-personagem bb-rosa">
+            <img src="assets/projetos/between-bubbles/personagem-rosa.webp" alt="Personagem rosa em pixel art." loading="lazy" width="761" height="1323">
+        </figure>
+        <figure class="galeria-item bb-tela">
+            <img src="assets/projetos/between-bubbles/tela-inicial.webp" alt="Tela inicial do jogo, com o logo Between Bubbles, os botões Start e Instructions e os dois personagens." loading="lazy" width="1152" height="648">
+        </figure>
+        <figure class="bb-personagem bb-azul">
+            <img src="assets/projetos/between-bubbles/personagem-azul.webp" alt="Personagem azul em pixel art." loading="lazy" width="914" height="1096">
+        </figure>
+    </section>
+
+    <!-- ===================== 03 · IDENTIDADE ===================== -->
+    <section class="capitulo revelar">
+        <span class="capitulo-num">03 — Identidade</span>
+        <h2>Pixel art para falar do digital.</h2>
+        <p>Personagens e mapas em baixa resolução proposital, azuis, roxos e lilás para a atmosfera de "bolha", e verde e amarelo para destacar inimigos e itens de interação.</p>
+    </section>
+
+    <section class="bb-identidade revelar">
+        <div class="bb-paleta" aria-label="Paleta do jogo">
+            <span style="--c:#002C8F">#002C8F</span>
+            <span style="--c:#41A5DD">#41A5DD</span>
+            <span style="--c:#E074A2">#E074A2</span>
+            <span style="--c:#6A1A54">#6A1A54</span>
+            <span style="--c:#E9F5FD" class="claro">#E9F5FD</span>
+        </div>
+        <div class="bb-elenco">
+            <img src="assets/projetos/between-bubbles/personagem-verde.webp" alt="Inimigo verde em pixel art." loading="lazy" width="275" height="457">
+            <img src="assets/projetos/between-bubbles/item-camera.webp" alt="Item de interação em forma de câmera." loading="lazy" width="360" height="344">
+            <img src="assets/projetos/between-bubbles/personagem-amarelo.webp" alt="Personagem amarelo em pixel art." loading="lazy" width="303" height="465">
+        </div>
+    </section>
+
+    <!-- ===================== 04 · DESENVOLVIMENTO ===================== -->
+    <section class="capitulo revelar">
+        <span class="capitulo-num">04 — Desenvolvimento</span>
+        <h2>Do bloco ao código.</h2>
+        <p>O jogo foi construído em duas etapas, e a programação foi a parte que mais me empolgou.</p>
+    </section>
+
+    <section class="pilares bb-etapas">
+        <article class="pilar revelar">
+            <span class="bb-etapa-num">1</span>
+            <h3>Blocagem no Unity</h3>
+            <p>Montagem das fases direto na engine: colisores, animações, layout de cada nível e a jogabilidade estruturada de forma visual.</p>
+        </article>
+        <article class="pilar revelar">
+            <span class="bb-etapa-num">2</span>
+            <h3>Programação em C#</h3>
+            <p>Lógica do jogo no Visual Studio Code. Os maiores desafios foram a transição entre telas e a animação de pulo, resolvidos com pesquisa, estudo e apoio de IA.</p>
+        </article>
+    </section>
+
+    <section class="bb-fases" aria-label="As quatro fases do jogo">
+        <figure class="revelar"><img src="assets/projetos/between-bubbles/fase-1.webp" alt="Fase 1: plataformas em azul escuro com inimigos verdes." loading="lazy" width="328" height="934"><figcaption>Fase 1</figcaption></figure>
+        <figure class="revelar"><img src="assets/projetos/between-bubbles/fase-2.webp" alt="Fase 2: plataformas rosa sobre fundo roxo." loading="lazy" width="326" height="918"><figcaption>Fase 2</figcaption></figure>
+        <figure class="revelar"><img src="assets/projetos/between-bubbles/fase-3.webp" alt="Fase 3: plataformas escuras sobre fundo lilás." loading="lazy" width="270" height="952"><figcaption>Fase 3</figcaption></figure>
+        <figure class="revelar"><img src="assets/projetos/between-bubbles/fase-4.webp" alt="Fase 4: plataformas claras sobre fundo roxo." loading="lazy" width="270" height="796"><figcaption>Fase 4</figcaption></figure>
+    </section>
+
+    <!-- ===================== 05 · EXPOSIÇÃO ===================== -->
+    <section class="capitulo revelar">
+        <span class="capitulo-num">05 — Exposição</span>
+        <h2>Testado por quem passava.</h2>
+        <p>Na exposição do Projeto Integrador, o jogo rodou projetado na parede, e quem passava sentava para jogar em dupla. O resultado: um jogo funcional, coerente e acima do que imaginávamos no começo.</p>
+    </section>
+
+    <section class="fotos-evento bb-expo">
+        <div class="fotos-grade">
+            <figure class="galeria-item foto revelar"><img src="assets/projetos/between-bubbles/expo-1.webp" alt="Tela inicial do jogo no notebook e projetada na parede da exposição." loading="lazy" width="576" height="768"></figure>
+            <figure class="galeria-item foto revelar"><img src="assets/projetos/between-bubbles/expo-2.webp" alt="Visitante jogando no notebook com o jogo projetado ao fundo." loading="lazy" width="513" height="768"></figure>
+            <figure class="galeria-item foto revelar"><img src="assets/projetos/between-bubbles/expo-3.webp" alt="Visitantes testando o jogo nas mesas da exposição." loading="lazy" width="513" height="768"></figure>
+            <figure class="galeria-item foto revelar"><img src="assets/projetos/between-bubbles/expo-4.webp" alt="Visitante diante da projeção de uma fase do jogo." loading="lazy" width="576" height="768"></figure>
+        </div>
+        <p class="fotos-legenda">Projeto Integrador · Produção Multimídia · Senac São Paulo</p>
+    </section>
+
+    <!-- ===================== 06 · EQUIPE ===================== -->
+    <section class="capitulo revelar">
+        <span class="capitulo-num">06 — Equipe</span>
+        <h2>Um só não chega ao fim, nem no jogo nem fora dele.</h2>
+    </section>
+
+    <section class="equipe revelar">
+        <article class="equipe-destaque">
+            <b>Luís Bispo</b>
+            <span>Estrutura e programação do jogo (Unity e C#)</span>
+        </article>
+        <ul>
+            <li>Mickaele Santos<small>Coordenação e direção gráfica</small></li>
+            <li>Lucas Goes<small>UX e experiência do usuário</small></li>
+            <li>Maria Eduarda<small>Pesquisa e conteúdo</small></li>
+        </ul>
+    </section>
+
+    <!-- ===================== FECHO ===================== -->
+    <section class="fecho-bb revelar">
+        <img src="assets/projetos/between-bubbles/dupla.webp" alt="" loading="lazy" width="1055" height="514">
+        <strong>Saia da bolha.<br>Jogue junto.</strong>
+    </section>
+
+    <!-- ===================== PRÓXIMO PROJETO ===================== -->
+    <nav class="projeto-navegacao" aria-label="Outros projetos">
+        <a href="index.html#projetos" class="projeto-anterior" data-transicao>← Todos os projetos</a>
+
+        <a href="memoria-amorfa.html" class="projeto-seguinte" data-transicao>
+            <span class="projeto-seguinte-rotulo">Próximo projeto</span>
+            <span class="projeto-seguinte-nome">Memória Amorfa</span>
+            <span class="projeto-seguinte-seta" aria-hidden="true">→</span>
+        </a>
+    </nav>
+
+</main>
+
+<footer class="site-footer">
+    <img src="Favicon.png" alt="">
+    <p>Luís Bispo de Andrade — © <span id="ano"></span></p>
+    <a href="#">Voltar ao topo</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
