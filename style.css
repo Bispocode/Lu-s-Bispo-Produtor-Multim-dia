@@ -178,6 +178,7 @@ textarea:focus-visible,
 }
 
 .scroll-cue{
+    transition:opacity .3s ease;
     position:absolute;
     bottom:36px; left:var(--pad);
     width:42px; height:42px;
@@ -288,6 +289,22 @@ a.proj::after{
 a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
 
 .proj-a{ grid-column:span 3; grid-row:span 2; }
+
+/* card com a capa do projeto como imagem de fundo (--capa no style do card) */
+.proj.proj-com-capa{ background:#0A1F44; color:#fff; isolation:isolate; }
+.proj-com-capa::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:
+        linear-gradient(to top, rgba(10,31,68,.85), rgba(10,31,68,0) 55%),
+        var(--capa) 38% 45% / cover no-repeat;
+    transition:transform .8s cubic-bezier(.22,1,.36,1);
+}
+.proj-com-capa:hover::before,
+.proj-com-capa:focus-visible::before{ transform:scale(1.05); }
+.proj-com-capa .proj-tag{ opacity:.85; }
 .proj-b{ grid-column:span 3; grid-row:span 2; }
 .proj-c{ grid-column:span 2; grid-row:span 2; }
 .proj-d{ grid-column:span 2; grid-row:span 2; }
@@ -309,46 +326,113 @@ a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
 /* =========================================================
    TRAJETÓRIA
 ========================================================= */
-.trajetoria{
-    padding:120px var(--pad);
-    max-width:900px;
+.trajetoria{ padding:120px 0; }
+.trajetoria-trilho{ position:relative; }
+.trajetoria-palco{
+    max-width:var(--wrap);
     margin:0 auto;
+    padding:0 var(--pad);
 }
-.trajetoria h2{
-    font-size:clamp(2rem, 1.3rem + 3vw, 3.4rem);
-    margin-bottom:56px;
+.trajetoria-topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:48px;
 }
+.trajetoria h2{ font-size:clamp(2rem, 1.3rem + 3vw, 3.4rem); }
+.trajetoria-dica{ font-size:.95rem; font-weight:700; color:var(--graphite); white-space:nowrap; }
+.trajetoria-dica .so-rolagem{ display:none; }
+.trajetoria.horizontal .trajetoria-dica .so-rolagem{ display:inline; }
+.trajetoria.horizontal .trajetoria-dica .so-arrastar{ display:none; }
+
+/* linha do tempo horizontal: uma linha no topo e um cartão por etapa */
 .linha-do-tempo{
-    border-left:2px solid var(--line);
-    padding-left:40px;
+    position:relative;
+    display:flex;
+    gap:28px;
+    padding-top:44px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
 }
+.linha-do-tempo::-webkit-scrollbar{ display:none; }
+.linha-do-tempo::before,
+.linha-progresso{
+    content:"";
+    position:absolute;
+    top:7px; left:0;
+    height:2px;
+    background:var(--line);
+}
+.linha-do-tempo::before{ width:var(--largura-linha, 100%); }
+.linha-progresso{ width:0; background:var(--red); z-index:1; }
+
 .item-tempo{
     position:relative;
-    padding-bottom:48px;
+    flex:0 0 min(340px, 78vw);
+    scroll-snap-align:start;
+    padding:24px;
+    border-radius:26px;
+    background:var(--pink);
 }
-.item-tempo:last-child{ padding-bottom:0; }
 .item-tempo::before{
     content:"";
     position:absolute;
-    left:-46px; top:6px;
-    width:11px; height:11px;
+    left:24px; top:-44px;
+    width:12px; height:12px;
     border-radius:50%;
     background:var(--red);
     border:3px solid var(--bg);
     box-shadow:0 0 0 2px var(--red);
+    z-index:2;
 }
+.item-formacao{ background:transparent; box-shadow:inset 0 0 0 1.5px var(--line); }
 .item-formacao::before{ background:var(--bg); box-shadow:0 0 0 2px var(--ink); }
 
 .tempo-data{
     display:block;
-    font-size:.85rem;
+    font-family:var(--display);
+    font-size:1.5rem;
     font-weight:700;
     color:var(--red);
-    margin-bottom:6px;
+    line-height:1.1;
 }
-.item-tempo h3{ font-size:1.35rem; margin-bottom:2px; }
-.item-tempo > p{ color:var(--graphite); font-weight:500; }
-.tempo-desc{ margin-top:10px; max-width:60ch; color:var(--ink); font-weight:400; }
+.tempo-tipo{
+    display:block;
+    margin:6px 0 18px;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--graphite);
+}
+.item-tempo h3{ font-size:1.3rem; line-height:1.2; margin-bottom:4px; }
+.tempo-org{ color:var(--graphite); font-weight:500; }
+.tempo-desc{ margin-top:12px; font-size:.95rem; color:var(--ink); }
+
+/* computador: a rolagem da página move a linha para o lado (classe posta pelo script) */
+.trajetoria.horizontal{ padding:0; }
+.trajetoria.horizontal .trajetoria-trilho{ height:calc(100vh + var(--distancia, 0px)); }
+.trajetoria.horizontal .trajetoria-palco{
+    max-width:none;
+    padding-left:max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    padding-right:max(var(--pad), calc((100vw - var(--wrap)) / 2 + var(--pad)));
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:80px;
+    overflow:hidden;
+}
+.trajetoria.horizontal .linha-do-tempo{
+    overflow:visible;
+    width:max-content;
+    will-change:transform;
+}
+.trajetoria.horizontal .item-tempo{ flex-basis:360px; }
 
 /* =========================================================
    SOBRE
@@ -1777,9 +1861,8 @@ body.entrando .grid-projetos .proj:nth-child(5){ --desloc:300px; animation-delay
 
 @media (max-width:560px){
     .hero-meta{ flex-direction:column; align-items:flex-start; gap:14px; }
-    .trajetoria{ padding-left:6vw; padding-right:6vw; }
-    .linha-do-tempo{ padding-left:26px; }
-    .item-tempo::before{ left:-32px; }
+    .trajetoria-topo{ flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:32px; }
+    .linha-do-tempo{ margin:0 calc(var(--pad) * -1); padding-left:var(--pad); padding-right:var(--pad); scroll-padding-left:var(--pad); }
     .projeto-hero{ padding-top:120px; }
     .projeto-ficha{ grid-template-columns:1fr; }
     .projeto-galeria{ grid-template-columns:1fr; grid-auto-rows:220px; }

@@ -195,15 +195,19 @@ if (!reduzMovimento) {
     const hero = document.querySelector(".hero");
     const heroLogo = document.querySelector(".hero-word");
     const heroMeta = document.querySelector(".hero-meta");
+    const dicaRolagem = document.querySelector(".scroll-cue");
     let agendado = false;
 
     const moverCamadas = () => {
 
-        // topo do index: o logo fica para trás e o texto de apoio vem um pouco depois
+        // topo do index: logo e texto de apoio descem mais devagar que a página.
+        // O texto (embaixo) desce mais rápido que o logo (em cima), então os dois só se afastam
+        // e nunca se sobrepõem.
         if (hero && window.scrollY < hero.offsetHeight) {
             const y = window.scrollY;
-            if (heroLogo) heroLogo.style.translate = `0 ${y * 0.35}px`;
-            if (heroMeta) heroMeta.style.translate = `0 ${y * 0.18}px`;
+            if (heroLogo) heroLogo.style.translate = `0 ${y * 0.12}px`;
+            if (heroMeta) heroMeta.style.translate = `0 ${y * 0.24}px`;
+            if (dicaRolagem) dicaRolagem.style.opacity = y > 40 ? 0 : "";
         }
 
         // imagens das páginas de projeto
@@ -236,3 +240,54 @@ document.querySelectorAll("video[data-tocar-visivel]").forEach(video => {
     }, { threshold: .35 });
     obs.observe(video);
 });
+
+// ===== Trajetória horizontal =====
+// No computador, a seção fica presa na tela e a rolagem vertical move a linha do tempo para o lado.
+// No celular (ou com movimento reduzido), a linha é arrastada com o dedo.
+{
+    const secao = document.querySelector("[data-trajetoria]");
+    if (secao) {
+        const trilho = secao.querySelector(".trajetoria-trilho");
+        const linha = secao.querySelector(".linha-do-tempo");
+        const progresso = secao.querySelector(".linha-progresso");
+        const consulta = window.matchMedia("(min-width: 901px) and (prefers-reduced-motion: no-preference)");
+        let distancia = 0, agendado = false;
+
+        const medir = () => {
+            const ativo = consulta.matches;
+            secao.classList.toggle("horizontal", ativo);
+            linha.style.transform = "";
+            const largura = linha.scrollWidth;
+            linha.style.setProperty("--largura-linha", `${largura}px`);
+            const palco = getComputedStyle(linha.parentElement);
+            const visivel = linha.parentElement.clientWidth - parseFloat(palco.paddingLeft) - parseFloat(palco.paddingRight);
+            distancia = ativo ? Math.max(0, largura - visivel) : 0;
+            secao.style.setProperty("--distancia", `${distancia}px`);
+            mover();
+        };
+
+        const mover = () => {
+            agendado = false;
+            if (!secao.classList.contains("horizontal")) {
+                // no celular, a barra acompanha o arraste
+                const max = linha.scrollWidth - linha.clientWidth;
+                progresso.style.width = `${max > 0 ? (linha.scrollLeft / max) * linha.scrollWidth : 0}px`;
+                return;
+            }
+            const r = trilho.getBoundingClientRect();
+            const percurso = r.height - window.innerHeight;
+            const p = percurso > 0 ? Math.min(1, Math.max(0, -r.top / percurso)) : 0;
+            linha.style.transform = `translate3d(${-p * distancia}px, 0, 0)`;
+            // a linha vermelha avança até a etapa que está no meio da tela
+            progresso.style.width = `${p * (linha.scrollWidth - 360) + 30}px`;
+        };
+
+        const agendar = () => { if (!agendado) { agendado = true; requestAnimationFrame(mover); } };
+        window.addEventListener("scroll", agendar, { passive: true });
+        linha.addEventListener("scroll", agendar, { passive: true });
+        window.addEventListener("resize", medir);
+        window.addEventListener("load", medir);
+        consulta.addEventListener("change", medir);
+        medir();
+    }
+}
