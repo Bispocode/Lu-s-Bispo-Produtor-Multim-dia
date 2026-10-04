@@ -2912,3 +2912,81 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     .proj-a.proj-com-capa{ --capa-pos:78% 40%; }
     .proj-capa-cp{ --capa-pos:35% 20%; }
 }
+
+/* ===== Cursor personalizado (ver o fim do script.js) =====
+   A cor segue a IDV da página: vermelho no portfólio, a cor de destaque em cada projeto. */
+body{
+    --cursor-cor:var(--cor-projeto, var(--red));
+    --cursor-texto:var(--bg);
+}
+html.cursor-invertido :is(.cursor-ponto, .cursor-anel){
+    --cursor-cor:var(--bg);
+    --cursor-texto:var(--cor-projeto, var(--red));
+}
+
+html.cursor-ativo :is(*, *::before, *::after):not(input, textarea, select, iframe, .jogo-canvas, [contenteditable]){
+    cursor:none !important;
+}
+
+.cursor-ponto,
+.cursor-anel{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:2147483000;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .25s ease;
+    will-change:transform;
+}
+html.cursor-visivel:not(.cursor-nativo) :is(.cursor-ponto, .cursor-anel){ opacity:1; }
+
+.cursor-ponto::before{
+    content:"";
+    position:absolute;
+    width:8px;
+    height:8px;
+    translate:-50% -50%;
+    border-radius:50%;
+    background:var(--cursor-cor);
+    box-shadow:0 0 0 1.5px color-mix(in srgb, var(--bg) 70%, transparent);
+    transition:scale .25s ease;
+}
+
+.cursor-anel b{
+    position:absolute;
+    width:34px;
+    height:34px;
+    translate:-50% -50%;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1.5px solid var(--cursor-cor);
+    color:transparent;
+    font:600 11px/1 var(--body);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    transition:width .35s cubic-bezier(.2,.8,.2,1), height .35s cubic-bezier(.2,.8,.2,1),
+               background-color .25s ease, color .2s ease, scale .2s ease;
+}
+
+html.cursor-link .cursor-anel b{
+    width:54px;
+    height:54px;
+    background:color-mix(in srgb, var(--cursor-cor) 15%, transparent);
+}
+
+html.cursor-rotulo .cursor-anel b{
+    width:96px;
+    height:96px;
+    background:var(--cursor-cor);
+    color:var(--cursor-texto);
+}
+html.cursor-rotulo .cursor-ponto::before{ scale:0; }
+
+html.cursor-pressionado .cursor-anel b{ scale:.82; }
+
+@media (prefers-reduced-motion: reduce){
+    .cursor-anel b{ transition:background-color .2s ease, color .2s ease; }
+}
