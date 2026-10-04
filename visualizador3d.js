@@ -105,11 +105,19 @@ async function montar(caixa) {
 
     caixa.appendChild(renderer.domElement);
 
+    // no celular, arrastar na vertical continua rolando a página; arrastar para o lado gira o modelo
+    if (window.matchMedia("(pointer: coarse)").matches) renderer.domElement.style.touchAction = "pan-y";
+
     const ajustar = () => {
         const { clientWidth: w, clientHeight: h } = caixa;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
+        // em telas estreitas (celular em pé) a câmera se afasta para o modelo caber na largura
+        const afastar = camera.aspect < 1.4 ? Math.pow(1.4 / camera.aspect, 0.75) : 1;
+        camera.position.setLength(distancia * afastar);
+        controles.minDistance = distancia * afastar * 0.35;
+        controles.maxDistance = distancia * afastar * 1.8;
     };
     new ResizeObserver(ajustar).observe(caixa);
     ajustar();
