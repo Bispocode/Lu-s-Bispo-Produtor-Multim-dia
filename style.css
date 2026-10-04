@@ -298,8 +298,8 @@ a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
     inset:0;
     z-index:-1;
     background:
-        linear-gradient(to top, rgba(10,31,68,.85), rgba(10,31,68,0) 55%),
-        var(--capa) 38% 45% / cover no-repeat;
+        linear-gradient(to top, rgba(10,31,68,.92) 0%, rgba(10,31,68,.55) 28%, rgba(10,31,68,0) 60%),
+        var(--capa) var(--capa-pos, 50% 45%) / cover no-repeat;
     transition:transform .8s cubic-bezier(.22,1,.36,1);
 }
 .proj-com-capa:hover::before,
@@ -310,7 +310,7 @@ a.proj:hover::after, a.proj:focus-visible::after{ opacity:1; transform:none; }
 .proj-capa-amorfa::before{
     background:
         linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,0) 60%),
-        var(--capa) 50% 28% / cover no-repeat;
+        var(--capa) var(--capa-pos, 50% 28%) / cover no-repeat;
     filter:grayscale(1);
 }
 .proj-b{ grid-column:span 3; grid-row:span 2; }
@@ -2877,8 +2877,8 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 .proj.proj-capa-cp{ background:#0C1B2D; color:#fff; }
 .proj-capa-cp::before{
     background:
-        linear-gradient(to top, rgba(12,27,45,.88), rgba(12,27,45,0) 55%),
-        var(--capa) 50% 40% / cover no-repeat;
+        linear-gradient(to top, rgba(12,27,45,.95) 0%, rgba(12,27,45,.7) 26%, rgba(12,27,45,0) 62%),
+        var(--capa) var(--capa-pos, 40% 30%) / cover no-repeat;
 }
 
 @media (max-width:900px){
@@ -2903,3 +2903,12 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 .tema-cp .equipe li{ min-height:220px; padding:28px; border-radius:26px; background:var(--cp-vermelho); color:#fff; box-shadow:none; font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); }
 .tema-cp .equipe li small{ color:rgba(255,255,255,.85); font-size:1rem; }
 @media (max-width:900px){ .tema-cp .equipe{ grid-template-columns:1fr; } }
+
+/* enquadramento das capas nos cards do index (por projeto e por tamanho de tela) */
+.proj-a.proj-com-capa{ --capa-pos:72% 40%; }      /* SIEG: a pessoa no centro, logo à esquerda */
+.proj-capa-amorfa{ --capa-pos:50% 30%; }
+.proj-capa-cp{ --capa-pos:38% 22%; }
+@media (max-width:900px){
+    .proj-a.proj-com-capa{ --capa-pos:78% 40%; }
+    .proj-capa-cp{ --capa-pos:35% 20%; }
+}
