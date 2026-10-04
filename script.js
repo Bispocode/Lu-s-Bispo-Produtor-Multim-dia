@@ -202,7 +202,9 @@ if (!reduzMovimento) {
         imagens.forEach(img => {
             const r = img.parentElement.getBoundingClientRect();
             if (r.bottom < 0 || r.top > window.innerHeight) return;
-            const desloc = (r.top + r.height / 2 - window.innerHeight / 2) * -0.1;
+            // a imagem é 12% maior que a moldura: o movimento não pode passar dessa folga
+            const folga = r.height * 0.055;
+            const desloc = Math.max(-folga, Math.min(folga, (r.top + r.height / 2 - window.innerHeight / 2) * -0.1));
             img.style.transform = `translateY(${desloc}px) scale(1.12)`;
         });
 

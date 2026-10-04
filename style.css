@@ -942,6 +942,45 @@ background: var(--red);
 }
 .desafio-linha{ margin-top:24px; max-width:56ch; font-size:1.15rem; opacity:.75; }
 
+/* Fotos de evento: grade de retratos verticais com duas fotos em destaque */
+.fotos-evento{
+    max-width:var(--wrap);
+    margin:0 auto 120px;
+    padding:0 var(--pad);
+}
+.fotos-grade{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-flow:dense;
+    gap:14px;
+}
+.fotos-grade .foto{
+    grid-column:auto;
+    grid-row:auto;
+    aspect-ratio:2 / 3;
+    border-radius:18px;
+}
+.fotos-grade .foto-grande{
+    grid-column:span 2;
+    grid-row:span 2;
+    aspect-ratio:auto;
+}
+.fotos-grade .foto-grande-dir{ grid-column:3 / span 2; }
+.fotos-legenda{
+    margin-top:18px;
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--graphite);
+}
+@media (max-width:900px){
+    .fotos-grade{ grid-template-columns:repeat(2, 1fr); gap:10px; }
+    .fotos-grade .foto-grande,
+    .fotos-grade .foto-grande-dir{ grid-column:1 / -1; }
+    .fotos-evento{ margin-bottom:80px; }
+}
+
 /* Ferramentas: print + problema / solução */
 .ferramentas{
     display:grid;
