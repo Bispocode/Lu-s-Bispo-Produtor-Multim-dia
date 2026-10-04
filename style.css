@@ -2701,10 +2701,10 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     --line:rgba(12,27,45,.14);
     --cor-projeto:var(--cp-vermelho);
 
-    --display:"Fruktur", "Archivo Black", serif;
+    --display:"Story Script", "Archivo Black", sans-serif;
     --body:"Archivo", sans-serif;
 }
-/* títulos em Fruktur (blackletter): sem caixa-alta, que deixa a fonte ilegível */
+/* títulos em Story Script: sem caixa-alta, que deixa a fonte manuscrita ilegível */
 .tema-cp h1, .tema-cp h2, .tema-cp h3{ font-weight:400; letter-spacing:0; line-height:1; }
 .tema-cp .pilar h3{ font-size:clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem); }
 .tema-cp .site-header{ background:rgba(243,239,230,.92); }
@@ -2896,3 +2896,10 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
     .capa-cp-mesa img{ animation:none; }
     .postal-frente, .postal-verso{ transition:none; }
 }
+/* dupla: os dois cards com o mesmo peso */
+.tema-cp .equipe{ grid-template-columns:1fr 1fr; }
+.tema-cp .equipe-destaque{ --cartao-fundo:var(--cp-marinho); --cartao-texto:#fff; }
+.tema-cp .equipe ul{ grid-template-columns:1fr; }
+.tema-cp .equipe li{ min-height:220px; padding:28px; border-radius:26px; background:var(--cp-vermelho); color:#fff; box-shadow:none; font-size:clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem); }
+.tema-cp .equipe li small{ color:rgba(255,255,255,.85); font-size:1rem; }
+@media (max-width:900px){ .tema-cp .equipe{ grid-template-columns:1fr; } }
