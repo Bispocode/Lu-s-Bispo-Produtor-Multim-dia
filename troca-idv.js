@@ -30,7 +30,7 @@ const TrocaIDV = (() => {
         texto: "#17130F",
         destaque: "#D7263D",
         cores: ["#D7263D", "#7A0D1D", "#F5DEE0", "#17130F"],
-        fonte: "Red Hat Display",
+        fonte: "Bricolage Grotesque",
         rotulo: "Quem eu sou",
         marca: `<img src="logo.svg" alt="">`
     };
