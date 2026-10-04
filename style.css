@@ -1010,6 +1010,26 @@ background: var(--red);
 }
 .ferramenta-texto dd{ font-size:1.08rem; line-height:1.5; }
 
+/* Vídeo de ferramenta dentro de uma janela de navegador */
+.ferramenta-video.galeria-item{
+    display:flex;
+    flex-direction:column;
+    aspect-ratio:auto;
+    background:#fff;
+    box-shadow:0 30px 60px -30px rgba(10,31,68,.35), 0 0 0 1px var(--line);
+}
+.janela-barra{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 14px;
+    background:#f4f5f8;
+    border-bottom:1px solid var(--line);
+}
+.janela-barra i{ width:10px; height:10px; border-radius:50%; background:#d5d8df; }
+.janela-barra span{ margin:0 auto; padding-right:48px; font-size:.75rem; font-weight:600; color:var(--graphite); }
+.ferramenta-video video{ display:block; width:100%; aspect-ratio:1424 / 884; height:auto; background:#f2f4f8; }
+
 /* Depoimento: fecha a história */
 .depoimento{
     max-width:var(--wrap);

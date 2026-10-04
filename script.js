@@ -217,3 +217,14 @@ if (!reduzMovimento) {
 
     moverCamadas();
 }
+
+// ===== Vídeos que tocam só quando aparecem na tela =====
+// (quem pediu menos movimento vê o vídeo parado, com os controles para dar play)
+document.querySelectorAll("video[data-tocar-visivel]").forEach(video => {
+    if (reduzMovimento) { video.controls = true; return; }
+    const obs = new IntersectionObserver(([entrada]) => {
+        if (entrada.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+    }, { threshold: .35 });
+    obs.observe(video);
+});
