@@ -7,6 +7,9 @@
 //   data-cor="#d9d9d9"     cor do material (o modelo é mostrado em uma cor só)
 //   data-rotacao-y="90"    gira o modelo (graus) para ele começar de frente
 //   data-distancia="1.6"   distância da câmera (maior = modelo menor)
+//   data-materiais="originais"   mantém os materiais do arquivo (para cenas com várias peças)
+//   data-camera="0.6,0.4,0.8"    posição inicial da câmera (x,y,z), em vez de olhar de frente
+//   data-foco="tenda,mural"      nomes das peças em que a câmera mira; o resto da cena fica como contexto
 
 const THREE_URL = "https://esm.sh/three@0.179";
 const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -65,13 +68,16 @@ async function montar(caixa) {
         if (!o.isMesh) return;
         // modelos exportados sem normais (para ficarem leves) ganham normais suaves aqui
         if (!o.geometry.attributes.normal) o.geometry.computeVertexNormals();
-        o.material = material;
+        if (caixa.dataset.materiais !== "originais") o.material = material;
     });
 
     // centraliza e normaliza o tamanho do modelo
     const grupo = new THREE.Group();
     grupo.add(modelo);
-    const caixaModelo = new THREE.Box3().setFromObject(modelo);
+    const caixaModelo = new THREE.Box3();
+    const foco = (caixa.dataset.foco || "").split(",").map(n => n.trim()).filter(Boolean);
+    if (foco.length) foco.forEach(nome => { const o = modelo.getObjectByName(nome); if (o) caixaModelo.expandByObject(o); });
+    if (caixaModelo.isEmpty()) caixaModelo.setFromObject(modelo);
     const centro = caixaModelo.getCenter(new THREE.Vector3());
     const tamanho = caixaModelo.getSize(new THREE.Vector3()).length();
     modelo.position.sub(centro);
@@ -79,13 +85,16 @@ async function montar(caixa) {
     grupo.rotation.y = THREE.MathUtils.degToRad(parseFloat(caixa.dataset.rotacaoY || "0"));
     cena.add(grupo);
 
-    camera.position.set(0, 0, parseFloat(caixa.dataset.distancia || "1.6"));
+    if (caixa.dataset.camera) camera.position.fromArray(caixa.dataset.camera.split(",").map(Number));
+    else camera.position.set(0, 0, parseFloat(caixa.dataset.distancia || "1.6"));
 
     const controles = new OrbitControls(camera, renderer.domElement);
     controles.enableDamping = true;
     controles.enablePan = false;
-    controles.minDistance = 0.6;
-    controles.maxDistance = 3;
+    controles.enableZoom = false;   // a rodinha do mouse continua rolando a página
+    const distancia = camera.position.length();
+    controles.minDistance = distancia * 0.35;
+    controles.maxDistance = distancia * 1.8;
     controles.autoRotate = !reduzMovimento;
     controles.autoRotateSpeed = 1.2;
 

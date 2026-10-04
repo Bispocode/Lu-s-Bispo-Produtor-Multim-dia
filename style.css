@@ -2388,3 +2388,5 @@ body.tema-amorfa.entrando .capa-cheia{ --desloc:40px; animation-delay:.3s; }
 }
 .visualizador3d.carregado .visualizador3d-dica{ opacity:1; }
 .visualizador3d.mexeu .visualizador3d-dica{ opacity:0; }
+/* na página em preto e branco, as cenas com materiais coloridos também perdem a cor */
+.tema-amorfa .visualizador3d canvas{ filter:grayscale(1); }
